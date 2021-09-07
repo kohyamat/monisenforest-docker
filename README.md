@@ -1,6 +1,6 @@
 # monisenforest-docker
 
-Data analysis app for permanent forest plot observations in the Monitoring Site 1000.
+Application for analysing permanent forest plot observation data (tree census and litterfall survey) of the Monitoring Site 1000.
 
 ## Features
 
