@@ -16,7 +16,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon href="https://github.com/MoniSenNC/MoniSenForest">
+      <v-btn icon href="https://github.com/kohyamat/monisenforest-docker">
         <v-icon> mdi-github </v-icon>
       </v-btn>
     </v-app-bar>
@@ -83,7 +83,7 @@
           Released under the
           <a
             class="teal--text"
-            href="https://github.com/MoniSenNC/MoniSenForest/blob/main/LICENSE"
+            href="https://github.com/kohyamat/monisenforest-docker/blob/main/LICENSE"
             style="text-decoration: none"
             >MIT license</a
           ><br />
