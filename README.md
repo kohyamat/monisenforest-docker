@@ -10,7 +10,7 @@ Application for analysing permanent forest plot observation data (tree census an
 - SqlAlchemy with Alembic for migrations
 - Traefik for reverse proxy
 
-## Getting Started.
+## Getting Started
 
 Docker and docker-compose are required.
 
