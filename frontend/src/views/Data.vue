@@ -213,7 +213,6 @@ export default {
         .post(BASE_URL + "/upload_file/", formData)
         .then((response) => {
           console.log(response.data.message);
-          this.$store.dispatch("getPlots");
         })
         .catch((err) => {
           console.log(err);
@@ -254,7 +253,6 @@ export default {
     async deleteFile(index) {
       axios.delete(BASE_URL + "/plots/" + index + "/").then((response) => {
         console.log(response.data.message);
-        this.$store.dispatch("getPlots");
       });
     },
 
@@ -267,6 +265,7 @@ export default {
             await this.deleteFile(d.id);
           })
         ).then(() => {
+          this.$store.dispatch("getPlots");
           this.selectedData = [];
           this.loading = false;
         });
@@ -284,6 +283,7 @@ export default {
         .put(BASE_URL + "/plots/" + this.editIndex + "/", this.updatePlot)
         .then((response) => {
           console.log(response.data.message);
+          this.$store.dispatch("getPlots");
           this.closeDialogUpdate();
           this.loading = false;
         });
@@ -295,7 +295,6 @@ export default {
         this.updatePlot = null;
         this.updateMessage = "";
         this.editIndex = -1;
-        this.$store.dispatch("getPlots");
       });
     },
 

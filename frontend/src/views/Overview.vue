@@ -325,7 +325,7 @@
     </v-col>
 
     <div class="text-center">
-      <v-bottom-sheet v-model="sheetNoData">
+      <v-bottom-sheet v-model="sheetEmpty">
         <v-sheet class="text-center" height="200px">
           <div class="py-6">No data files have been loaded.</div>
           <v-btn text color="red" @click="$router.push('data')">
@@ -394,7 +394,8 @@ export default {
     plots() {
       return this.$store.getters.allPlots;
     },
-    plotList() {
+    plotIdList() {
+      // sort alphabetically
       return this.plots
         .map((e) => e.plot_id)
         .filter((element, index, self) => self.indexOf(element) === index)
@@ -402,15 +403,15 @@ export default {
     },
     plotDataType() {
       let arr = {};
-      for (let i = 0; i < this.plotList.length; i++) {
-        arr[this.plotList[i]] = this.plots
-          .filter((e) => e.plot_id === this.plotList[i])
+      for (let i = 0; i < this.plotIdList.length; i++) {
+        arr[this.plotIdList[i]] = this.plots
+          .filter((e) => e.plot_id === this.plotIdList[i])
           .map((e) => e.dtype);
       }
       return arr;
     },
     plotData() {
-      return this.plotList.map((e) => {
+      return this.plotIdList.map((e) => {
         return {
           plot_id: e,
           site_name: plotInfo[e].site_name,
@@ -423,8 +424,8 @@ export default {
         };
       });
     },
-    sheetNoData() {
-      return this.plots.length === 0;
+    sheetEmpty() {
+      return this.$store.getters.getEmpty;
     },
   },
 

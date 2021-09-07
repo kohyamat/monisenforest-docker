@@ -7,7 +7,7 @@
         </v-layout>
         <div class="text-h2 py-6" style="text-align: center">MoniSenForest</div>
         <p class="text-body-1" style="text-align: center">
-          Application for analysing permanent forest plot observation data (Tree
+          Application for analysing permanent forest plot observation data (tree
           census and litterfall survey) of the Monitoring Site 1000.
         </p>
 
@@ -23,14 +23,14 @@
               >Monitoring Sites 1000</span
             >
             <v-icon x-small color="teal">mdi-open-in-new</v-icon> </a
-          >, often abbreviated as 'moni1000' or 'moni-sen', is a nationwide
-          ecosystem monitoring project in Japan led by the Ministry of the
-          Environment. The monitoring covers a wide range of ecosystems,
-          including alpine areas, forests, grasslands, satoyama, lakes, marshes,
-          coastal areas, coral reefs, and small islands. Since the launch of the
-          project in 2003, a massive amount of observation data has been
-          accumulated with the cooperation of researchers and citizens.
-          Permanent forest plot observations have been conducted as part of the
+          >, also called 'moni1000' or 'moni-sen', is a nationwide ecosystem
+          monitoring project in Japan led by the Ministry of the Environment.
+          The monitoring covers a wide range of ecosystems, including alpine
+          areas, forests, grasslands, satoyama, lakes, marshes, coastal areas,
+          coral reefs, and small islands. Since the launch of the project in
+          2003, a massive amount of observation data has been accumulated with
+          the cooperation of researchers and citizens. Permanent forest plot
+          observations have been conducted as part of the
           <a
             href="http://moni1000-forest.jwrc.or.jp"
             target="_blank"

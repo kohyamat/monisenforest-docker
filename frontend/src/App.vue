@@ -61,6 +61,15 @@
       </v-container>
     </v-main>
 
+    <v-bottom-sheet v-model="sheetNetworkError">
+      <v-sheet class="text-center" height="200px">
+        <div class="py-6">Network Error: unable to connect to the backend API</div>
+        <v-btn text color="red" @click="sheetNetworkError = !sheetNetworkError">
+          Dismiss
+        </v-btn>
+      </v-sheet>
+    </v-bottom-sheet>
+
     <v-footer padless>
       <v-card flat tile width="100%" class="text-center pt-4">
         <v-row class="pa-0 ma-0 justify-center">
@@ -121,15 +130,26 @@ export default {
           path: "/about",
         },
       ],
+      sheetNetworkError: false,
     };
   },
 
   mounted() {
-    try {
-      this.$store.dispatch("getPlots");
-    } catch (e) {
-      (e) => console.log("Error" + e.message);
-    }
+    this.$store.dispatch("getPlots");
+  },
+
+  computed: {
+    networkStatus() {
+      return this.$store.getters.getNetworkStatus;
+    },
+  },
+
+  watch: {
+    networkStatus() {
+      if (this.networkStatus === "error") {
+        this.sheetNetworkError = true;
+      }
+    },
   },
 
   methods: {},
