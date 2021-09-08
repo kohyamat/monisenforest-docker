@@ -15,12 +15,14 @@ CREATE_TREE_COM_SUMMARY_MANY_QUERY = """
 
 GET_TREE_COM_SUMMARY_BY_PID = """
     SELECT * FROM tree_com_summary
-    WHERE pid=:pid;
+    WHERE pid=:pid
+    ORDER BY id;
 """
 
 GET_TREE_COM_SUMMARY_BY_PLOTID_QUERY = """
     SELECT * FROM tree_com_summary
-    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='treeGBH');
+    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='treeGBH')
+    ORDER BY id;
 """
 
 DELETE_TREE_COM_SUMMARY_BY_ID_QUERY = """
@@ -42,12 +44,14 @@ CREATE_TREE_COM_TURNOVER_MANY_QUERY = """
 
 GET_TREE_COM_TURNOVER_BY_PID = """
     SELECT * FROM tree_com_turnover
-    WHERE pid=:pid;
+    WHERE pid=:pid
+    ORDER BY id;
 """
 
 GET_TREE_COM_TURNOVER_BY_PLOTID_QUERY = """
     SELECT * FROM tree_com_turnover
-    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='treeGBH');
+    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='treeGBH')
+    ORDER BY id;
 """
 
 DELETE_TREE_COM_TURNOVER_BY_ID_QUERY = """
@@ -69,12 +73,14 @@ CREATE_TREE_SP_SUMMARY_MANY_QUERY = """
 
 GET_TREE_SP_SUMMARY_BY_PID = """
     SELECT * FROM tree_sp_summary
-    WHERE pid=:pid;
+    WHERE pid=:pid
+    ORDER BY id;
 """
 
 GET_TREE_SP_SUMMARY_BY_PLOTID_QUERY = """
     SELECT * FROM tree_sp_summary
-    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='treeGBH');
+    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='treeGBH')
+    ORDER BY id;
 """
 
 DELETE_TREE_SP_SUMMARY_BY_ID_QUERY = """
@@ -96,12 +102,14 @@ CREATE_TREE_SP_TURNOVER_MANY_QUERY = """
 
 GET_TREE_SP_TURNOVER_BY_PID = """
     SELECT * FROM tree_sp_turnover
-    WHERE pid=:pid;
+    WHERE pid=:pid
+    ORDER BY id;
 """
 
 GET_TREE_SP_TURNOVER_BY_PLOTID_QUERY = """
     SELECT * FROM tree_sp_turnover
-    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='treeGBH');
+    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='treeGBH')
+    ORDER BY id;
 """
 
 DELETE_TREE_SP_TURNOVER_BY_ID_QUERY = """

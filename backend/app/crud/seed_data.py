@@ -17,12 +17,14 @@ CREATE_SEED_ANNUAL_MANY_QUERY = """
 
 GET_SEED_ANNUAL_BY_PID = """
     SELECT * FROM seed_annual
-    WHERE pid=:pid;
+    WHERE pid=:pid
+    ORDER BY id;
 """
 
 GET_SEED_ANNUAL_BY_PLOTID_QUERY = """
     SELECT * FROM seed_annual
-    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='seed');
+    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='seed')
+    ORDER BY id;
 """
 
 DELETE_SEED_ANNUAL_BY_ID_QUERY = """
@@ -44,12 +46,14 @@ CREATE_SEED_EACH_MANY_QUERY = """
 
 GET_SEED_EACH_BY_PID = """
     SELECT * FROM seed_each
-    WHERE pid=:pid;
+    WHERE pid=:pid
+    ORDER BY id;
 """
 
 GET_SEED_EACH_BY_PLOTID_QUERY = """
     SELECT * FROM seed_each
-    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='seed');
+    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='seed')
+    ORDER BY id;
 """
 
 DELETE_SEED_EACH_BY_ID_QUERY = """

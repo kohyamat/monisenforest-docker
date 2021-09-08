@@ -17,12 +17,14 @@ CREATE_LITTER_ANNUAL_MANY_QUERY = """
 
 GET_LITTER_ANNUAL_BY_PID = """
     SELECT * FROM litter_annual
-    WHERE pid=:pid;
+    WHERE pid=:pid
+    ORDER BY id;
 """
 
 GET_LITTER_ANNUAL_BY_PLOTID_QUERY = """
     SELECT * FROM litter_annual
-    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='litter');
+    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='litter')
+    ORDER BY id;
 """
 
 DELETE_LITTER_ANNUAL_BY_ID_QUERY = """
@@ -44,12 +46,14 @@ CREATE_LITTER_EACH_MANY_QUERY = """
 
 GET_LITTER_EACH_BY_PID = """
     SELECT * FROM litter_each
-    WHERE pid=:pid;
+    WHERE pid=:pid
+    ORDER BY id;
 """
 
 GET_LITTER_EACH_BY_PLOTID_QUERY = """
     SELECT * FROM litter_each
-    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='litter');
+    WHERE pid=(SELECT id FROM plots WHERE plot_id=:plot_id AND dtype='litter')
+    ORDER BY id;
 """
 
 DELETE_LITTER_EACH_BY_ID_QUERY = """
