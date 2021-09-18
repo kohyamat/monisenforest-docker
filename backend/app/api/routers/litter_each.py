@@ -27,6 +27,6 @@ async def get_litter_each(
     )
     datafile = result.scalars().first()
     if datafile:
-        return datafile.litter_each
+        return sorted(datafile.litter_each, key=lambda x: x.id)
     else:
         return None

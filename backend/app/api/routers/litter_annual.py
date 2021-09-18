@@ -27,6 +27,6 @@ async def get_litter_annual(
     )
     datafile = result.scalars().first()
     if datafile:
-        return datafile.litter_annual
+        return sorted(datafile.litter_annual, key=lambda x: x.id)
     else:
         return None

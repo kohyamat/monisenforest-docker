@@ -27,6 +27,6 @@ async def get_seed_each(
     )
     datafile = result.scalars().first()
     if datafile:
-        return datafile.seed_each
+        return sorted(datafile.seed_each, key=lambda x: x.id)
     else:
         return None

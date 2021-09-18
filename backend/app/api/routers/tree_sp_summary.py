@@ -27,7 +27,7 @@ async def get_tree_sp_summary(
     )
     datafile = result.scalars().first()
     if datafile:
-        return datafile.tree_sp_summary
+        return sorted(datafile.tree_sp_summary, key=lambda x: x.id)
     else:
         return None
 

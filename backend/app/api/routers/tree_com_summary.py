@@ -27,6 +27,6 @@ async def get_tree_com_summary(
     )
     datafile = result.scalars().first()
     if datafile:
-        return datafile.tree_com_summary
+        return sorted(datafile.tree_com_summary, key=lambda x: x.id)
     else:
         return None

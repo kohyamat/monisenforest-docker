@@ -27,6 +27,6 @@ async def get_tree_com_turnover(
     )
     datafile = result.scalars().first()
     if datafile:
-        return datafile.tree_com_turnover
+        return sorted(datafile.tree_com_turnover, key=lambda x: x.id)
     else:
         return None
