@@ -30,7 +30,7 @@
         <v-data-table
           v-model="selectedData"
           :headers="headers"
-          :items="plots"
+          :items="datafiles"
           :search="search"
           class="elevation-0"
           sort-by="plot_id"
@@ -123,7 +123,7 @@
               <v-btn color="teal darken-1" text @click="closeDialogUpdate">
                 Cancel
               </v-btn>
-              <v-btn color="teal darken-1" text @click="updatePlotConfirm">
+              <v-btn color="teal darken-1" text @click="updateDataConfirm">
                 OK
               </v-btn>
             </v-card-actions>
@@ -173,7 +173,7 @@ export default {
         { text: "File Size (KB)", value: "size" },
       ],
       editIndex: -1,
-      updatePlot: null,
+      updateData: null,
       updateMessage: "",
       errorMessage: "",
       selectedFiles: [],
@@ -184,8 +184,8 @@ export default {
   },
 
   computed: {
-    plots() {
-      return this.$store.getters.allPlots;
+    datafiles() {
+      return this.$store.getters.allDatafiles;
     },
   },
 
@@ -210,7 +210,7 @@ export default {
   methods: {
     async submitFile(formData) {
       return axios
-        .post(BASE_URL + "/upload_file/", formData)
+        .post(BASE_URL + "/datafiles/upload/", formData)
         .then((response) => {
           console.log(response.data.message);
         })
@@ -219,7 +219,7 @@ export default {
           if (err.response.status == 400) {
             this.updateMessage = err.response.data["message"];
             this.editIndex = err.response.data["id"];
-            this.updatePlot = err.response.data["data"];
+            this.updateData = err.response.data["data"];
             this.dialogUpdate = true;
           } else {
             this.dialogError = true;
@@ -239,7 +239,7 @@ export default {
             await this.submitFile(formData);
           })
         ).then(() => {
-          this.$store.dispatch("getPlots");
+          this.$store.dispatch("getDatafiles");
           this.loading = false;
         });
       }
@@ -251,7 +251,7 @@ export default {
     },
 
     async deleteFile(index) {
-      axios.delete(BASE_URL + "/plots/" + index + "/").then((response) => {
+      axios.delete(BASE_URL + "/datafiles/" + index + "/").then((response) => {
         console.log(response.data.message);
       });
     },
@@ -265,7 +265,7 @@ export default {
             await this.deleteFile(d.id);
           })
         ).then(() => {
-          this.$store.dispatch("getPlots");
+          this.$store.dispatch("getDatafiles");
           this.selectedData = [];
           this.loading = false;
         });
@@ -276,14 +276,14 @@ export default {
       this.dialogDelete = false;
     },
 
-    updatePlotConfirm() {
+    updateDataConfirm() {
       this.dialogUpdate = false;
       this.loading = true;
       axios
-        .put(BASE_URL + "/plots/" + this.editIndex + "/", this.updatePlot)
+        .put(BASE_URL + "/datafiles/" + this.editIndex + "/", this.updateData)
         .then((response) => {
           console.log(response.data.message);
-          this.$store.dispatch("getPlots");
+          this.$store.dispatch("getDatafiles");
           this.closeDialogUpdate();
           this.loading = false;
         });
@@ -292,7 +292,7 @@ export default {
     closeDialogUpdate() {
       this.dialogUpdate = false;
       this.$nextTick(() => {
-        this.updatePlot = null;
+        this.updateData = null;
         this.updateMessage = "";
         this.editIndex = -1;
       });

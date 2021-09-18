@@ -1,24 +1,24 @@
 import axios from "axios";
 
 const state = {
-  plots: [],
+  datafiles: [],
   empty: null,
   networkStatus: null,
 };
 
 const getters = {
-  allPlots: (state) => state.plots,
+  allDatafiles: (state) => state.datafiles,
   getEmpty: (state) => state.empty,
   getNetworkStatus: (state) => state.networkStatus,
 };
 
 const actions = {
-  async getPlots({ commit }) {
+  async getDatafiles({ commit }) {
     await axios
-      .get("http://localhost:8000/api/plots/")
+      .get("http://localhost:8000/api/datafiles/")
       .then((response) => {
         commit("setNetworkStatus", null);
-        commit("setPlots", response.data);
+        commit("setDatafiles", response.data);
         if (response.data.length > 0) {
           commit("setEmpty", false);
         } else {
@@ -33,7 +33,7 @@ const actions = {
 };
 
 const mutations = {
-  setPlots: (state, plots) => (state.plots = plots),
+  setDatafiles: (state, datafiles) => (state.datafiles = datafiles),
   setEmpty: (state, empty) => (state.empty = empty),
   setNetworkStatus: (state, status) => (state.networkStatus = status),
 };

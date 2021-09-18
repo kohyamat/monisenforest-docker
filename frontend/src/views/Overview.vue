@@ -391,12 +391,12 @@ export default {
   }),
 
   computed: {
-    plots() {
-      return this.$store.getters.allPlots;
+    datafiles() {
+      return this.$store.getters.allDatafiles;
     },
     plotIdList() {
       // sort alphabetically
-      return this.plots
+      return this.datafiles
         .map((e) => e.plot_id)
         .filter((element, index, self) => self.indexOf(element) === index)
         .sort();
@@ -404,7 +404,7 @@ export default {
     plotDataType() {
       let arr = {};
       for (let i = 0; i < this.plotIdList.length; i++) {
-        arr[this.plotIdList[i]] = this.plots
+        arr[this.plotIdList[i]] = this.datafiles
           .filter((e) => e.plot_id === this.plotIdList[i])
           .map((e) => e.dtype);
       }

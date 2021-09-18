@@ -135,7 +135,7 @@ export default {
   },
 
   mounted() {
-    this.$store.dispatch("getPlots");
+    this.$store.dispatch("getDatafiles");
   },
 
   computed: {
