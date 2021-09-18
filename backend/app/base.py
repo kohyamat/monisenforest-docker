@@ -1,3 +1,4 @@
+import codecs
 import csv
 import os
 import re
@@ -9,8 +10,9 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from zipfile import BadZipFile
 
 import numpy as np
-from app.logger import get_logger
 from openpyxl import load_workbook
+
+from app.logger import get_logger
 
 logger = get_logger(__name__)
 
@@ -290,6 +292,12 @@ class MonitoringData(object):
         )
 
 
+def check_utf8_bom(filepath: str) -> bool:
+    with open(filepath, "rb") as f:
+        raw = f.read(4)
+    return raw.startswith(codecs.BOM_UTF8)
+
+
 def read_xlsx(
     file: Union[str, bytes, Path], max_col: Optional[int] = None, **kwargs
 ) -> np.ndarray:
@@ -306,6 +314,8 @@ def read_xlsx(
     """
     if any(isinstance(file, t) for t in [str, Path]):
         filepath = Path(str(file)).expanduser()
+
+
         wb = load_workbook(filepath, read_only=True, data_only=True)
         if "Data" in wb.sheetnames:
             ws = wb["Data"]
@@ -353,11 +363,15 @@ def read_csv(
 
     """
     if any(isinstance(file, t) for t in [str, Path]):
+        if check_utf8_bom(str(file)):
+            encoding = "utf-8-sig"
         filepath = Path(str(file)).expanduser()
         with filepath.open(encoding=encoding) as f:
             reader = csv.reader(f)
             data = np.array([i for i in reader])
     elif isinstance(file, bytes):
+        if file[:4].startswith(codecs.BOM_UTF8):
+            encoding = "utf-8-sig"
         lines = file.decode(encoding=encoding).splitlines()
         reader = csv.reader(lines)
         data = np.array([i for i in reader])
