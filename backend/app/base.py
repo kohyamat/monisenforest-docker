@@ -9,9 +9,8 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from zipfile import BadZipFile
 
 import numpy as np
-from openpyxl import load_workbook
-
 from app.logger import get_logger
+from openpyxl import load_workbook
 
 logger = get_logger(__name__)
 
@@ -291,7 +290,9 @@ class MonitoringData(object):
         )
 
 
-def read_xlsx(file: Union[str, bytes, Path]) -> np.ndarray:
+def read_xlsx(
+    file: Union[str, bytes, Path], max_col: Optional[int] = None, **kwargs
+) -> np.ndarray:
     """
     Read a xlsx file and return a numpy ndarray object.
 
@@ -299,6 +300,8 @@ def read_xlsx(file: Union[str, bytes, Path]) -> np.ndarray:
     ----------
     file : path-like or bytes-like object
         Input data file
+    max_col: int
+        Maximum number of columns to read
 
     """
     if any(isinstance(file, t) for t in [str, Path]):
@@ -308,9 +311,12 @@ def read_xlsx(file: Union[str, bytes, Path]) -> np.ndarray:
             ws = wb["Data"]
         else:
             ws = wb[wb.sheetnames[0]]
+        if max_col and ws.max_column <= max_col:
+            max_col = None
         data = np.array(
-            [[str(j) if j is not None else "" for j in i] for i in ws.values]
+            [[cell.value for cell in row] for row in ws.iter_rows(max_col=max_col)]
         )
+        data = np.vectorize(lambda x: str(x) if x is not None else "")(data)
         wb.close()
     elif isinstance(file, bytes):
         wb = load_workbook(BytesIO(file), read_only=True, data_only=True)
@@ -318,9 +324,12 @@ def read_xlsx(file: Union[str, bytes, Path]) -> np.ndarray:
             ws = wb["Data"]
         else:
             ws = wb[wb.sheetnames[0]]
+        if max_col and ws.max_column <= max_col:
+            max_col = None
         data = np.array(
-            [[str(j) if j is not None else "" for j in i] for i in ws.values]
+            [[cell.value for cell in row] for row in ws.iter_rows(max_col=max_col)]
         )
+        data = np.vectorize(lambda x: str(x) if x is not None else "")(data)
         wb.close()
     else:
         msg = "expected str, bytes-like or path-like object, not {}".format(type(file))
@@ -329,7 +338,9 @@ def read_xlsx(file: Union[str, bytes, Path]) -> np.ndarray:
     return data
 
 
-def read_csv(file: Union[str, Path, bytes], encoding: str = "utf-8") -> np.ndarray:
+def read_csv(
+    file: Union[str, Path, bytes], encoding: str = "utf-8", **kwargs
+) -> np.ndarray:
     """
     Read a csv file and return a numpy ndarray object.
 
@@ -373,10 +384,10 @@ def read_table(
     if file_type == "csv":
         return read_csv(file, **kwargs)
     elif file_type == "xlsx":
-        return read_xlsx(file)
+        return read_xlsx(file, **kwargs)
     else:
         try:
-            data = read_xlsx(file)
+            data = read_xlsx(file, **kwargs)
         except BadZipFile:
             data = read_csv(file, **kwargs)
         return data

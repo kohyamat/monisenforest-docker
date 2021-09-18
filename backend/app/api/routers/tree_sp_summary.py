@@ -1,32 +1,33 @@
 from typing import List, Optional
 
-from app.api.dependencies.database import get_crud
-from app.crud import Crud
-from app.schemas.tree_sp_summary import TreeSpSummary
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, FastAPI
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload
+
+from app import models, schemas
+from app.db.db import get_session
 
 router = APIRouter()
 
 
 @router.get(
     "/",
-    response_model=List[TreeSpSummary],
+    response_model=List[schemas.TreeSpSummary],
     name="tree_sp_summary: get_values_by_plotId",
 )
-async def get_tree_sp_summary_by_plotid(
-    plot_id: str,
-    crud: Crud = Depends(get_crud(Crud)),
-) -> List[TreeSpSummary]:
-    return await crud.get_tree_sp_summary_by_plotid(plot_id=plot_id)
+async def get_tree_sp_summary(
+    plot_id: str, session: AsyncSession = Depends(get_session)
+) -> Optional[List[schemas.TreeSpSummary]]:
+    result = await session.execute(
+        select(models.Datafile)
+        .where(models.Datafile.plot_id == plot_id)
+        .where(models.Datafile.dtype == 'treeGBH')
+        .options(selectinload(models.Datafile.tree_sp_summary))
+    )
+    datafile = result.scalars().first()
+    if datafile:
+        return datafile.tree_sp_summary
+    else:
+        return None
 
-
-@router.get(
-    "/{pid}/",
-    response_model=TreeSpSummary,
-    name="tree_sp_summary: get_one_by_id",
-)
-async def get_plot_by_id(
-    pid: int,
-    crud: Crud = Depends(get_crud(Crud)),
-) -> Optional[TreeSpSummary]:
-    return await crud.get_tree_sp_summary_by_pid(pid=pid)

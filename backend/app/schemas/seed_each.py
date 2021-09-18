@@ -15,16 +15,15 @@ class SeedEachBase(BaseModel):
     wdry: Optional[float]
     number: Optional[float]
     prop_viable: Optional[float]
-    pid: int
+    datafile_id: int
 
 
 class SeedEachCreate(SeedEachBase):
     pass
 
 
-class SeedEachInDB(SeedEachBase):
-    id: int
-
-
 class SeedEach(SeedEachBase):
     id: int
+
+    class Config:
+        orm_mode = True

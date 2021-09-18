@@ -13,16 +13,15 @@ class TreeSpSummaryBase(BaseModel):
     n_prop: float
     ba_prop: float
     b_prop: float
-    pid: int
+    datafile_id: int
 
 
 class TreeSpSummaryCreate(TreeSpSummaryBase):
     pass
 
 
-class TreeSpSummaryInDB(TreeSpSummaryBase):
-    id: int
-
-
 class TreeSpSummary(TreeSpSummaryBase):
     id: int
+
+    class Config:
+        orm_mode = True

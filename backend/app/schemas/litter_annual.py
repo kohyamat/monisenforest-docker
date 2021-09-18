@@ -13,16 +13,15 @@ class LitterAnnualBase(BaseModel):
     wdry_branch: Optional[float]
     wdry_rep: Optional[float]
     wdry_all: Optional[float]
-    pid: int
+    datafile_id: int
 
 
 class LitterAnnualCreate(LitterAnnualBase):
     pass
 
 
-class LitterAnnualInDB(LitterAnnualBase):
-    id: int
-
-
 class LitterAnnual(LitterAnnualBase):
     id: int
+
+    class Config:
+        orm_mode = True

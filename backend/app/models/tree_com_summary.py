@@ -1,12 +1,11 @@
 from typing import TYPE_CHECKING
 
+from app.models.base import Base
 from sqlalchemy import Column, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from app.models.base import Base
-
 if TYPE_CHECKING:
-    from .plot import Plot  # noqa: F401
+    from .datafiles import Datafile  # noqa: F401
 
 
 class TreeComSummary(Base):
@@ -22,5 +21,5 @@ class TreeComSummary(Base):
     shannon = Column(Float)
     richness = Column(Float)
 
-    pid = Column(Integer, ForeignKey("plots.id", ondelete="CASCADE"))
-    plot = relationship("Plot", back_populates="tree_com_summary")
+    datafile_id = Column(Integer, ForeignKey("datafiles.id", ondelete="CASCADE"))
+    datafile = relationship("Datafile", back_populates="tree_com_summary")

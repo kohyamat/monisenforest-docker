@@ -11,7 +11,7 @@ from app.schemas.tree_sp_turnover import TreeSpTurnover
 from pydantic import BaseModel
 
 
-class PlotBase(BaseModel):
+class DatafileBase(BaseModel):
     plot_id: str
     name: str
     name_jp: str
@@ -22,25 +22,16 @@ class PlotBase(BaseModel):
     size: Optional[float]
 
 
-class PlotCreate(PlotBase):
+class DatafileCreate(DatafileBase):
     pass
 
 
-class PlotUpdate(PlotBase):
+class DatafileUpdate(DatafileBase):
     tmppath: str
 
 
-class PlotInDB(PlotBase):
+class Datafile(DatafileBase):
     id: int
-    tree_com_summary: List[TreeComSummary] = []
-    tree_com_turnover: List[TreeComTurnover] = []
-    tree_sp_summary: List[TreeSpSummary] = []
-    tree_sp_turnover: List[TreeSpTurnover] = []
-    litter_each: List[LitterEach] = []
-    litter_annual: List[LitterAnnual] = []
-    seed_each: List[SeedEach] = []
-    seed_annual: List[SeedAnnual] = []
 
-
-class Plot(PlotBase):
-    id: int
+    class Config:
+        orm_mode = True

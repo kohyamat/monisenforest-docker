@@ -1,5 +1,5 @@
 from app.models.base import Base
-from app.models.plot import Plot
+from app.models.datafiles import Datafile
 from app.models.tree_com_summary import TreeComSummary
 from app.models.tree_com_turnover import TreeComTurnover
 from app.models.tree_sp_summary import TreeSpSummary

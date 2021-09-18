@@ -1,21 +1,32 @@
-from typing import List
+from typing import List, Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, FastAPI
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload
 
-from app.api.dependencies.database import get_crud
-from app.crud import Crud
-from app.schemas.seed_each import SeedEach
+from app import models, schemas
+from app.db.db import get_session
 
 router = APIRouter()
 
 
 @router.get(
     "/",
-    response_model=List[SeedEach],
+    response_model=List[schemas.SeedEach],
     name="seed_each: get_values_by_plotId",
 )
-async def get_seed_each_by_plotid(
-    plot_id: str,
-    crud: Crud = Depends(get_crud(Crud)),
-) -> List[SeedEach]:
-    return await crud.get_seed_each_by_plotid(plot_id=plot_id)
+async def get_seed_each(
+    plot_id: str, session: AsyncSession = Depends(get_session)
+) -> Optional[List[schemas.SeedEach]]:
+    result = await session.execute(
+        select(models.Datafile)
+        .where(models.Datafile.plot_id == plot_id)
+        .where(models.Datafile.dtype == 'seed')
+        .options(selectinload(models.Datafile.seed_each))
+    )
+    datafile = result.scalars().first()
+    if datafile:
+        return datafile.seed_each
+    else:
+        return None

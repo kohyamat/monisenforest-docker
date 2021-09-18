@@ -12,16 +12,15 @@ class LitterEachBase(BaseModel):
     wdry_branch: Optional[float]
     wdry_rep: Optional[float]
     wdry_all: Optional[float]
-    pid: int
+    datafile_id: int
 
 
 class LitterEachCreate(LitterEachBase):
     pass
 
 
-class LitterEachInDB(LitterEachBase):
-    id: int
-
-
 class LitterEach(LitterEachBase):
     id: int
+
+    class Config:
+        orm_mode = True

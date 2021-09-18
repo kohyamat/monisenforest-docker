@@ -14,16 +14,15 @@ class TreeComTurnoverBase(BaseModel):
     m_abs: float
     p_abs: float
     l_abs: float
-    pid: int
+    datafile_id: int
 
 
 class TreeComTurnoverCreate(TreeComTurnoverBase):
     pass
 
 
-class TreeComTurnoverInDB(TreeComTurnoverBase):
-    id: int
-
-
 class TreeComTurnover(TreeComTurnoverBase):
     id: int
+
+    class Config:
+        orm_mode = True

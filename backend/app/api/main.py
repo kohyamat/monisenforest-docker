@@ -2,11 +2,12 @@ from typing import Any
 
 import orjson
 from app.api.routers import router as api_router
-from app.api.routers.upload_file import DataExistsException
-from app.core import config, tasks
+from app.api.routers.datafiles import DataExistsException
+from app.db.config import settings
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+
 
 
 class ORJSONResponse(JSONResponse):
@@ -18,8 +19,8 @@ class ORJSONResponse(JSONResponse):
 
 def get_application():
     app = FastAPI(
-        title=config.PROJECT_NAME,
-        version=config.VERSION,
+        title=settings.PROJECT_NAME,
+        version=settings.PROJECT_VERSION,
         default_response_class=ORJSONResponse,
         # docs_url='/api/docs',
         # redoc_url='/api/redoc',
@@ -36,9 +37,6 @@ def get_application():
 
     # app.include_router(api_router)
     app.include_router(api_router, prefix="/api")
-
-    app.add_event_handler("startup", tasks.create_start_app_handler(app))
-    app.add_event_handler("shutdown", tasks.create_stop_app_handler(app))
 
     return app
 

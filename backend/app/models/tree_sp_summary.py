@@ -6,13 +6,13 @@ from sqlalchemy.orm import relationship
 from app.models.base import Base
 
 if TYPE_CHECKING:
-    from .plot import Plot  # noqa: F401
+    from .datafiles import Datafile  # noqa: F401
 
 
 class TreeSpSummary(Base):
     __tablename__ = "tree_sp_summary"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True)
     year = Column(Float)
     species_jp = Column(String)
     species = Column(String)
@@ -25,5 +25,5 @@ class TreeSpSummary(Base):
     ba_prop = Column(Float)
     b_prop = Column(Float)
 
-    pid = Column(Integer, ForeignKey("plots.id", ondelete="CASCADE"))
-    plot = relationship("Plot", back_populates="tree_sp_summary")
+    datafile_id = Column(Integer, ForeignKey("datafiles.id", ondelete="CASCADE"))
+    datafile = relationship("Datafile", back_populates="tree_sp_summary")

@@ -1,9 +1,11 @@
 from typing import Any, Dict, List
 
-from app.api.dependencies.database import get_crud
-from app.crud import Crud
-from app.schemas.tree_sp_summary import TreeSpSummary
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, FastAPI
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+
+from app import models, schemas
+from app.db.db import get_session
 
 router = APIRouter()
 
@@ -12,20 +14,33 @@ router = APIRouter()
     "/list/", response_model=List[Dict[Any, Any]], name="species: get_species_list"
 )
 async def get_tree_sp_list(
-    crud: Crud = Depends(get_crud(Crud)),
+    session: AsyncSession = Depends(get_session),
 ) -> List[Dict[Any, Any]]:
-    return await crud.get_tree_sp_list()
+    result = await session.execute(
+        select(models.TreeSpSummary.species, models.TreeSpSummary.species_jp)
+    )
+    species_list = []
+    for x in result:
+        sp = {"species": x[0], "name_jp": x[1]}
+        if sp not in species_list:
+            species_list.append(sp)
+    return species_list
 
 
 @router.get(
-    "/occurrence/", response_model=List[str], name="species: get_species_occurence"
+    "/occurrence/",
+    response_model=List[str],
+    name="species: get_species_occurence",
 )
 async def get_tree_sp_occurrence(
     species: str,
-    crud: Crud = Depends(get_crud(Crud)),
+    session: AsyncSession = Depends(get_session),
 ) -> List[str]:
-    plots = await crud.get_all_plots()
-    print(plots)
-    plot_id_dict = {p.id: p.plot_id for p in plots}
-    return_values = await crud.get_tree_sp_occurrence(species=species)
-    return [plot_id_dict[i] for i in return_values]
+    result = await session.execute(select(models.Datafile))
+    datafiles = result.scalars().all()
+    plot_id_dict = {x.id: x.plot_id for x in datafiles}
+    query = select(models.TreeSpSummary.datafile_id).where(
+        models.TreeSpSummary.species == species
+    )
+    result = await session.execute(query)
+    return [plot_id_dict[i] for i in set([i[0] for i in result])]

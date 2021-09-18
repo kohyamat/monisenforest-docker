@@ -10,16 +10,15 @@ class TreeComSummaryBase(BaseModel):
     b: float
     shannon: float
     richness: float
-    pid: int
+    datafile_id: int
 
 
 class TreeComSummaryCreate(TreeComSummaryBase):
     pass
 
 
-class TreeComSummaryInDB(TreeComSummaryBase):
-    id: int
-
-
 class TreeComSummary(TreeComSummaryBase):
     id: int
+
+    class Config:
+        orm_mode = True

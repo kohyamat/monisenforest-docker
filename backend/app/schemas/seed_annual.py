@@ -15,16 +15,15 @@ class SeedAnnualBase(BaseModel):
     wdry: Optional[float]
     number: Optional[float]
     prop_viable: Optional[float]
-    pid: int
+    datafile_id: int
 
 
 class SeedAnnualCreate(SeedAnnualBase):
     pass
 
 
-class SeedAnnualInDB(SeedAnnualBase):
-    id: int
-
-
 class SeedAnnual(SeedAnnualBase):
     id: int
+
+    class Config:
+        orm_mode = True

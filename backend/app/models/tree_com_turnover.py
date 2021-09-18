@@ -6,13 +6,13 @@ from sqlalchemy.orm import relationship
 from app.models.base import Base
 
 if TYPE_CHECKING:
-    from .plot import Plot  # noqa: F401
+    from .datafiles import Datafile  # noqa: F401
 
 
 class TreeComTurnover(Base):
     __tablename__ = "tree_com_turnover"
 
-    id = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True)
     t1 = Column(Float)
     t2 = Column(Float)
     n_m = Column(Float)
@@ -26,5 +26,5 @@ class TreeComTurnover(Base):
     p_abs = Column(Float)
     l_abs = Column(Float)
 
-    pid = Column(Integer, ForeignKey("plots.id", ondelete="CASCADE"))
-    plot = relationship("Plot", back_populates="tree_com_turnover")
+    datafile_id = Column(Integer, ForeignKey("datafiles.id", ondelete="CASCADE"))
+    datafile = relationship("Datafile", back_populates="tree_com_turnover")

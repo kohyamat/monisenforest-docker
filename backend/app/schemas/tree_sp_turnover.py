@@ -18,16 +18,15 @@ class TreeSpTurnoverBase(BaseModel):
     m_abs: float
     p_abs: float
     l_abs: float
-    pid: int
+    datafile_id: int
 
 
 class TreeSpTurnoverCreate(TreeSpTurnoverBase):
     pass
 
 
-class TreeSpTurnoverInDB(TreeSpTurnoverBase):
-    id: int
-
-
 class TreeSpTurnover(TreeSpTurnoverBase):
     id: int
+
+    class Config:
+        orm_mode = True
