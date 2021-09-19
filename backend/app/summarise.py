@@ -107,8 +107,18 @@ def get_gbh(d, interpolate=True, spring_census=False):
         d = add_extra_columns_tree(d)
 
     gbh_mat, gbh_cn = d.select(regex="^gbh[0-9]{2}$", return_column_names=True)
-    gbh_mat = gbh_mat.astype("float64")
-    err_mat = d.select(regex="^error[0-9]{2}$").astype("int")
+    # gbh_mat = gbh_mat.astype("float64")
+    yrs = np.vectorize(retrive_year)(gbh_cn)
+    yrs_order = np.argsort(yrs)
+    gbh_mat = gbh_mat[:, yrs_order]
+    gbh_cn = gbh_cn[yrs_order]
+    gbh_mat = np.vectorize(lambda x: isvalid(x, return_value=True))(gbh_mat)
+    na_col = np.isnan(gbh_mat).all(axis=0)
+    gbh_mat = gbh_mat[:, ~na_col]
+    gbh_cn = gbh_cn[~na_col]
+    # err_mat = d.select(regex="^error[0-9]{2}$").astype("int")
+    err_cn = [re.sub("gbh", "error", i) for i in gbh_cn]
+    err_mat = d.select(err_cn).astype("int")
     date_cn = [re.sub("gbh", "s_date", i) for i in gbh_cn]
     try:
         date_mat = d.select(date_cn)
