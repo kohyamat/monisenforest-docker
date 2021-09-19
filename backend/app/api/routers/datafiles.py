@@ -7,17 +7,15 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import Any, Dict, List, Optional
 
+import app.base as base
+import app.summarise as summarise
+from app import models, schemas
+from app.db.db import get_session
 from fastapi import APIRouter, Body, Depends, File, HTTPException, UploadFile
 from sqlalchemy import delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from starlette.status import HTTP_201_CREATED
-
-import app.base as base
-import app.summarise as summarise
-from app import models, schemas
-from app.db.db import get_session
-
 
 router = APIRouter()
 
@@ -261,15 +259,13 @@ async def add_seed_data_summary(
     session: AsyncSession,
 ) -> None:
     ss = summarise.SeedSummary(d)
-    for x in ss.each_sampling():
-        query = models.LitterEach(**dict({"datafile_id": datafile_id}, **x))
-        session.add(query)
-        await session.commit()
+    query_values = [dict({"datafile_id": datafile_id}, **x) for x in ss.each_sampling()]
+    await session.execute(models.SeedEach.__table__.insert(), query_values)
+    await session.commit()
 
-    for x in ss.annual():
-        query = models.LitterAnnual(**dict({"datafile_id": datafile_id}, **x))
-        session.add(query)
-        await session.commit()
+    query_values = [dict({"datafile_id": datafile_id}, **x) for x in ss.annual()]
+    await session.execute(models.SeedAnnual.__table__.insert(), query_values)
+    await session.commit()
 
 
 @router.put(
