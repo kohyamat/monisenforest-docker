@@ -7,15 +7,16 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 from typing import Any, Dict, List, Optional
 
-import app.base as base
-import app.summarise as summarise
-from app import models, schemas
-from app.db.db import get_session
 from fastapi import APIRouter, Body, Depends, File, HTTPException, UploadFile
 from sqlalchemy import delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from starlette.status import HTTP_201_CREATED
+
+import app.base as base
+import app.summarise as summarise
+from app import models, schemas
+from app.db.db import get_session
 
 router = APIRouter()
 
@@ -216,26 +217,30 @@ async def add_tree_data_summary(
     query_values = [
         dict({"datafile_id": datafile_id}, **x) for x in ts.species_summary()
     ]
-    await session.execute(models.TreeSpSummary.__table__.insert(), query_values)
-    await session.commit()
+    if query_values:
+        await session.execute(models.TreeSpSummary.__table__.insert(), query_values)
+        await session.commit()
 
     query_values = [
         dict({"datafile_id": datafile_id}, **x) for x in ts.species_turnover()
     ]
-    await session.execute(models.TreeSpTurnover.__table__.insert(), query_values)
-    await session.commit()
+    if query_values:
+        await session.execute(models.TreeSpTurnover.__table__.insert(), query_values)
+        await session.commit()
 
     query_values = [
         dict({"datafile_id": datafile_id}, **x) for x in ts.community_summary()
     ]
-    await session.execute(models.TreeComSummary.__table__.insert(), query_values)
-    await session.commit()
+    if query_values:
+        await session.execute(models.TreeComSummary.__table__.insert(), query_values)
+        await session.commit()
 
     query_values = [
         dict({"datafile_id": datafile_id}, **x) for x in ts.community_turnover()
     ]
-    await session.execute(models.TreeComTurnover.__table__.insert(), query_values)
-    await session.commit()
+    if query_values:
+        await session.execute(models.TreeComTurnover.__table__.insert(), query_values)
+        await session.commit()
 
 
 async def add_litter_data_summary(
@@ -245,12 +250,14 @@ async def add_litter_data_summary(
 ) -> None:
     ls = summarise.LitterSummary(d)
     query_values = [dict({"datafile_id": datafile_id}, **x) for x in ls.each_sampling()]
-    await session.execute(models.LitterEach.__table__.insert(), query_values)
-    await session.commit()
+    if query_values:
+        await session.execute(models.LitterEach.__table__.insert(), query_values)
+        await session.commit()
 
     query_values = [dict({"datafile_id": datafile_id}, **x) for x in ls.annual()]
-    await session.execute(models.LitterAnnual.__table__.insert(), query_values)
-    await session.commit()
+    if query_values:
+        await session.execute(models.LitterAnnual.__table__.insert(), query_values)
+        await session.commit()
 
 
 async def add_seed_data_summary(
@@ -260,12 +267,14 @@ async def add_seed_data_summary(
 ) -> None:
     ss = summarise.SeedSummary(d)
     query_values = [dict({"datafile_id": datafile_id}, **x) for x in ss.each_sampling()]
-    await session.execute(models.SeedEach.__table__.insert(), query_values)
-    await session.commit()
+    if query_values:
+        await session.execute(models.SeedEach.__table__.insert(), query_values)
+        await session.commit()
 
     query_values = [dict({"datafile_id": datafile_id}, **x) for x in ss.annual()]
-    await session.execute(models.SeedAnnual.__table__.insert(), query_values)
-    await session.commit()
+    if query_values:
+        await session.execute(models.SeedAnnual.__table__.insert(), query_values)
+        await session.commit()
 
 
 @router.put(
