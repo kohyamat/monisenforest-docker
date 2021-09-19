@@ -1,12 +1,11 @@
 from typing import List, Optional
 
+from app import models, schemas
+from app.db.db import get_session
 from fastapi import APIRouter, Depends, FastAPI
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
-
-from app import models, schemas
-from app.db.db import get_session
 
 router = APIRouter()
 
@@ -22,7 +21,7 @@ async def get_tree_com_summary(
     result = await session.execute(
         select(models.Datafile)
         .where(models.Datafile.plot_id == plot_id)
-        .where(models.Datafile.dtype == 'treeGBH')
+        .where(models.Datafile.dtype == "treeGBH")
         .options(selectinload(models.Datafile.tree_com_summary))
     )
     datafile = result.scalars().first()
@@ -30,3 +29,17 @@ async def get_tree_com_summary(
         return sorted(datafile.tree_com_summary, key=lambda x: x.id)
     else:
         return None
+
+
+@router.get(
+    "/all/",
+    response_model=List[schemas.TreeComSummary],
+    name="tree_com_summary: get_all",
+)
+async def get_tree_com_summary_all(
+    session: AsyncSession = Depends(get_session),
+) -> Optional[List[schemas.TreeComSummary]]:
+    result = await session.execute(
+        select(models.TreeComSummary).order_by(models.TreeComSummary.id)
+    )
+    return result.scalars().all()

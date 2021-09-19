@@ -30,3 +30,17 @@ async def get_seed_annual(
         return sorted(datafile.seed_annual, key=lambda x: x.id)
     else:
         return None
+
+
+@router.get(
+    "/all/",
+    response_model=List[schemas.SeedAnnual],
+    name="seed_each: get_all",
+)
+async def get_seed_each_all(
+    session: AsyncSession = Depends(get_session),
+) -> Optional[List[schemas.SeedAnnual]]:
+    result = await session.execute(
+        select(models.SeedAnnual).order_by(models.SeedAnnual.id)
+    )
+    return result.scalars().all()

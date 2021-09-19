@@ -30,3 +30,17 @@ async def get_litter_each(
         return sorted(datafile.litter_each, key=lambda x: x.id)
     else:
         return None
+
+
+@router.get(
+    "/all/",
+    response_model=List[schemas.LitterEach],
+    name="litter_each: get_all",
+)
+async def get_litter_each_all(
+    session: AsyncSession = Depends(get_session),
+) -> Optional[List[schemas.LitterEach]]:
+    result = await session.execute(
+        select(models.LitterEach).order_by(models.LitterEach.id)
+    )
+    return result.scalars().all()

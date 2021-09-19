@@ -30,3 +30,17 @@ async def get_litter_annual(
         return sorted(datafile.litter_annual, key=lambda x: x.id)
     else:
         return None
+
+
+@router.get(
+    "/all/",
+    response_model=List[schemas.LitterAnnual],
+    name="litter_annual: get_all",
+)
+async def get_litter_annual_all(
+    session: AsyncSession = Depends(get_session),
+) -> Optional[List[schemas.LitterAnnual]]:
+    result = await session.execute(
+        select(models.LitterAnnual).order_by(models.LitterAnnual.id)
+    )
+    return result.scalars().all()

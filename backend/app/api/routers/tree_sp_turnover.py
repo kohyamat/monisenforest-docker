@@ -30,3 +30,17 @@ async def get_tree_sp_turnover(
         return sorted(datafile.tree_sp_turnover, key=lambda x: x.id)
     else:
         return None
+
+
+@router.get(
+    "/all/",
+    response_model=List[schemas.TreeSpTurnover],
+    name="tree_sp_turnover: get_all",
+)
+async def get_tree_sp_turnover_all(
+    session: AsyncSession = Depends(get_session),
+) -> Optional[List[schemas.TreeSpTurnover]]:
+    result = await session.execute(
+        select(models.TreeSpTurnover).order_by(models.TreeSpTurnover.id)
+    )
+    return result.scalars().all()
