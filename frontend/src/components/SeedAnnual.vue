@@ -138,7 +138,7 @@
 
       <v-btn icon @click="showCaption = !showCaption">
         <v-icon>
-          {{ showCaption ? "mdi-chevron-up" : "mdi-chevron-down" }}
+          {{ showCaption ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
         </v-icon>
       </v-btn>
     </v-card-actions>
@@ -159,27 +159,27 @@
 </template>
 
 <script>
-import BarChart from "../components/BarChart.js";
+import BarChart from '../components/BarChart.js'
 
 export default {
   components: {
     BarChart,
   },
 
-  props: ["data", "toggleSingleCol"],
+  props: ['data', 'toggleSingleCol'],
 
   data: () => ({
-    search: "",
+    search: '',
     spList: [],
     spSelected1: null,
     spSelected2: [],
     chartData: null,
-    subtitle: "Amount of seeds or fruits per square meter",
+    subtitle: 'Amount of seeds or fruits per square meter',
     options: {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
-        position: "top",
+        position: 'top',
         // reverse: true,
       },
       scales: {
@@ -193,17 +193,17 @@ export default {
         ],
         yAxes: [
           {
-            id: "y-axis-1",
-            type: "linear",
-            position: "left",
+            id: 'y-axis-1',
+            type: 'linear',
+            position: 'left',
             ticks: {
               beginAtZero: true,
             },
           },
           {
-            id: "y-axis-2",
-            type: "linear",
-            position: "right",
+            id: 'y-axis-2',
+            type: 'linear',
+            position: 'right',
             ticks: {
               beginAtZero: true,
             },
@@ -216,13 +216,13 @@ export default {
       tooltips: {
         callbacks: {
           label: function (tooltipItem) {
-            return tooltipItem.yLabel;
+            return tooltipItem.yLabel
           },
         },
       },
       plugins: {
         colorschemes: {
-          scheme: "brewer.DarkTwo4",
+          scheme: 'brewer.DarkTwo4',
         },
       },
     },
@@ -233,81 +233,83 @@ export default {
 
     headers: [
       {
-        text: "Year",
-        value: "year",
-        label: "Year",
-        caption: "Calender year",
+        text: 'Year',
+        value: 'year',
+        label: 'Year',
+        caption: 'Calender year',
       },
       {
-        text: "Name",
-        value: "species_jp",
-        label: "Name",
-        caption: "Japanese name",
+        text: 'Name',
+        value: 'species_jp',
+        label: 'Name',
+        caption: 'Japanese name',
       },
       {
-        text: "Species",
-        value: "species",
-        label: "Species",
-        caption: "Scientific name",
+        text: 'Species',
+        value: 'species',
+        label: 'Species',
+        caption: 'Scientific name',
       },
       {
-        text: "Family",
-        value: "family",
-        label: "Family",
-        caption: "Family name",
+        text: 'Family',
+        value: 'family',
+        label: 'Family',
+        caption: 'Family name',
       },
       {
-        text: "N",
-        value: "number",
-        label: "Number of seeds or fruits",
-        caption: "Number of seeds or fruits (m<sup>&minus;2</sup>)",
+        text: 'N',
+        value: 'number',
+        label: 'Number of seeds or fruits',
+        caption:
+          'Number of seeds or fruits (m<sup>&minus;2</sup>&nbsp;year<sup>&minus;2</sup>)',
       },
       {
-        text: "W",
-        value: "wdry",
-        label: "Dry mass of seeds or fruits",
-        caption: "Dry mass of seeds or fruits (g&nbsp;m<sup>&minus;2</sup>)",
+        text: 'W',
+        value: 'wdry',
+        label: 'Dry mass of seeds or fruits',
+        caption:
+          'Dry mass of seeds or fruits (g&nbsp;m<sup>&minus;2</sup>&nbsp;year<sup>&minus;2</sup>)',
       },
       {
-        text: "%Viable",
-        value: "prop_viable",
-        label: "Pecentage of viable seeds",
-        caption: "Pecentage of viable seeds",
+        text: '%Viable',
+        value: 'prop_viable',
+        label: 'Pecentage of viable seeds',
+        caption: 'Pecentage of viable seeds',
       },
     ],
   }),
 
   mounted() {
-    this.getSpList();
+    this.getSpList()
   },
 
   computed: {
     filteredData1() {
-      return this.data.filter((d) => d.species === this.spSelected1);
+      return this.data.filter((d) => d.species === this.spSelected1)
     },
     filteredData2() {
-      return this.data.filter((d) => this.spSelected2.includes(d.species));
+      return this.data.filter((d) => this.spSelected2.includes(d.species))
     },
     selectAllSpecies() {
-      return this.spSelected2.length === this.spList.length;
+      return this.spSelected2.length === this.spList.length
     },
     selectSomeSpecies() {
-      return this.spSelected2.length > 0 && !this.selectAllSpecies;
+      return this.spSelected2.length > 0 && !this.selectAllSpecies
     },
     iconSpecies() {
-      if (this.selectAllSpecies) return "mdi-close-box";
-      if (this.selectSomeSpecies) return "mdi-minus-box";
-      return "mdi-checkbox-blank-outline";
+      if (this.selectAllSpecies) return 'mdi-close-box'
+      if (this.selectSomeSpecies) return 'mdi-minus-box'
+      return 'mdi-checkbox-blank-outline'
     },
   },
 
   watch: {
     data() {
-      this.getSpList();
+      this.getSpList()
     },
 
     filteredData1() {
-      this.fillData();
+      this.fillData()
     },
   },
 
@@ -318,7 +320,7 @@ export default {
           return {
             species_jp: e.species_jp,
             species: e.species,
-          };
+          }
         })
         .filter(
           (element, index, self) =>
@@ -327,19 +329,19 @@ export default {
                 e.species_jp === element.species_jp &&
                 e.species === element.species
             ) === index
-        );
-      this.spSelected1 = this.spList.map((o) => o.species)[0];
-      this.spSelected2 = this.spList.map((o) => o.species).slice();
+        )
+      this.spSelected1 = this.spList.map((o) => o.species)[0]
+      this.spSelected2 = this.spList.map((o) => o.species).slice()
     },
 
     toggleSpecies() {
       this.$nextTick(() => {
         if (this.selectAllSpecies) {
-          this.spSelected2 = [];
+          this.spSelected2 = []
         } else {
-          this.spSelected2 = this.spList.map((e) => e.species).slice();
+          this.spSelected2 = this.spList.map((e) => e.species).slice()
         }
-      });
+      })
     },
 
     fillData() {
@@ -347,32 +349,32 @@ export default {
         labels: this.filteredData1.map((e) => Math.round(e.year * 10) / 10),
         datasets: [
           {
-            type: "line",
-            label: "Number (left axis)",
-            borderColor: "rgba(103, 58, 183, 0.8)",
-            pointBorderColor: "rgba(103, 58, 183, 0.8)",
-            pointBackgroundColor: "rgba(103, 58, 183,) 0.8",
+            type: 'line',
+            label: 'Number (left axis)',
+            borderColor: 'rgba(103, 58, 183, 0.8)',
+            pointBorderColor: 'rgba(103, 58, 183, 0.8)',
+            pointBackgroundColor: 'rgba(103, 58, 183,) 0.8',
             fill: false,
             data: this.filteredData1.map((e) => e.number),
-            yAxisID: "y-axis-1",
+            yAxisID: 'y-axis-1',
             order: 1,
           },
           {
-            type: "bar",
-            label: "Dry mass (right axis)",
-            backgroundColor: "rgba(0, 150, 136, 0.8)",
-            borderColor: "rgba(0, 150, 136, 0.8)",
+            type: 'bar',
+            label: 'Dry mass (right axis)',
+            backgroundColor: 'rgba(0, 150, 136, 0.8)',
+            borderColor: 'rgba(0, 150, 136, 0.8)',
             data: Array.from(
               this.filteredData1.map((e) => e.wdry),
               (i) => (i !== null ? i : NaN)
             ),
-            yAxisID: "y-axis-2",
+            yAxisID: 'y-axis-2',
             order: 2,
           },
         ],
-      };
-      this.loaded = true;
+      }
+      this.loaded = true
     },
   },
-};
+}
 </script>

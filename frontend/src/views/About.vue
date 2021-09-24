@@ -113,7 +113,7 @@
           <li class="py-2" v-for="(item, index) in references" :key="index">
             {{ item.author }} ({{ item.year }}) {{ item.title }}.
             <span class="font-italic">{{ item.journal }}</span
-            >{{ item.pages ? ", " + item.pages : "" }}.
+            >{{ item.pages ? ', ' + item.pages : '' }}.
             <a
               :href="item.doi"
               target="_blank"
@@ -138,73 +138,73 @@ export default {
       references: [
         {
           author:
-            "Ishihara MI, Suzuki SN, Nakamura M, Enoki T, Fujiwara A, Hiura T, Homma K, Hoshino D, Hoshizaki K, Ida H, Ishida K, Itoh A, Kaneko T, Kubota K, Kuraji K, Kuramoto S, Makita A, Masaki T, Namikawa K, Niiyama K, Noguchi M, Nomiya H, Ohkubo T, Saito S, Sakai T, Sakimoto M, Sakio H, Shibano H, Sugita H, Suzuki M, Takashima A, Tanaka N, Tashiro N, Tokuchi N, Yakushima Forest Environment Conservation Center, Yoshida T & Yoshida Y",
-          year: "2011",
+            'Ishihara MI, Suzuki SN, Nakamura M, Enoki T, Fujiwara A, Hiura T, Homma K, Hoshino D, Hoshizaki K, Ida H, Ishida K, Itoh A, Kaneko T, Kubota K, Kuraji K, Kuramoto S, Makita A, Masaki T, Namikawa K, Niiyama K, Noguchi M, Nomiya H, Ohkubo T, Saito S, Sakai T, Sakimoto M, Sakio H, Shibano H, Sugita H, Suzuki M, Takashima A, Tanaka N, Tashiro N, Tokuchi N, Yakushima Forest Environment Conservation Center, Yoshida T & Yoshida Y',
+          year: '2011',
           title:
-            "Forest stand structure, composition, and dynamics in 34 sites over Japan",
-          journal: "Ecological Research",
-          pages: "26: 1007-1008",
-          doi: "https://doi.org/10.1007/s11284-011-0847-y",
+            'Forest stand structure, composition, and dynamics in 34 sites over Japan',
+          journal: 'Ecological Research',
+          pages: '26: 1007-1008',
+          doi: 'https://doi.org/10.1007/s11284-011-0847-y',
         },
         {
           author:
-            "Suzuki SN, Ishihara MI, Nakamura M, Abe S, Hiura T, Homma K, Higa M, Hoshino D, Hoshizaki K, Ida H, Ishida K, Kawanishi M, Kobayashi K, Kuraji K, Kuramoto S, Masaki T, Niiyama K, Noguchi M, Nomiya H, Saito S, Sakai T, Sakimoto M, Sakio H, Sato T, Shibano H, Shibata M, Suzuki M, Takashima A, Tanaka H, Takagi M, Tashiro N, Tokuchi N, Yoshida T & Yoshida Y",
-          year: "2012",
+            'Suzuki SN, Ishihara MI, Nakamura M, Abe S, Hiura T, Homma K, Higa M, Hoshino D, Hoshizaki K, Ida H, Ishida K, Kawanishi M, Kobayashi K, Kuraji K, Kuramoto S, Masaki T, Niiyama K, Noguchi M, Nomiya H, Saito S, Sakai T, Sakimoto M, Sakio H, Sato T, Shibano H, Shibata M, Suzuki M, Takashima A, Tanaka H, Takagi M, Tashiro N, Tokuchi N, Yoshida T & Yoshida Y',
+          year: '2012',
           title:
-            "Nation‐wide litter fall data from 21 forests of the Monitoring Sites 1000 Project in Japan",
-          journal: "Ecological Research",
-          pages: "27: 989-990",
-          doi: "https://doi.org/10.1007/s11284-012-0980-2",
+            'Nation‐wide litter fall data from 21 forests of the Monitoring Sites 1000 Project in Japan',
+          journal: 'Ecological Research',
+          pages: '27: 989-990',
+          doi: 'https://doi.org/10.1007/s11284-012-0980-2',
         },
         {
           author:
-            "Ishihara MI, Utsugi H, Tanouchi H, Aiba M, Kurokawa H, Onoda Y, Nagano M, Umehara T, Ando M, Miyata R & Hiura T",
-          year: "2015",
+            'Ishihara MI, Utsugi H, Tanouchi H, Aiba M, Kurokawa H, Onoda Y, Nagano M, Umehara T, Ando M, Miyata R & Hiura T',
+          year: '2015',
           title:
-            "Efficacy of generic allometric equations for estimating biomass: a test in Japanese natural forests",
-          journal: "Ecological Applications",
-          pages: "25: 1433-1446",
-          doi: "https://doi.org/10.1890/14-0175.1",
+            'Efficacy of generic allometric equations for estimating biomass: a test in Japanese natural forests',
+          journal: 'Ecological Applications',
+          pages: '25: 1433-1446',
+          doi: 'https://doi.org/10.1890/14-0175.1',
         },
         {
           author:
-            "Aiba M, Kurokawa H, Onoda Y, Oguro M, Nakashizuka T & Masaki T",
-          year: "2016",
+            'Aiba M, Kurokawa H, Onoda Y, Oguro M, Nakashizuka T & Masaki T',
+          year: '2016',
           title:
-            "Context‐dependent changes in the functional composition of tree communities along successional gradients after land‐use change",
-          journal: "Journal of Ecology",
-          pages: "104: 1347-1356",
-          doi: "https://doi.org/10.1111/1365-2745.12597",
+            'Context‐dependent changes in the functional composition of tree communities along successional gradients after land‐use change',
+          journal: 'Journal of Ecology',
+          pages: '104: 1347-1356',
+          doi: 'https://doi.org/10.1111/1365-2745.12597',
         },
         {
           author:
-            "Zanne AE, Lopez-Gonzalez G, Coomes, DA, Ilic J, Jansen S, Lewis SL, Miller RB, Swenson NG, Wiemann MC & Chave J",
-          year: "2009",
-          title: "Data from: Towards a worldwide wood economics spectrum",
-          journal: "Dryad, Dataset",
-          pages: "",
-          doi: "https://doi.org/10.5061/dryad.234",
+            'Zanne AE, Lopez-Gonzalez G, Coomes, DA, Ilic J, Jansen S, Lewis SL, Miller RB, Swenson NG, Wiemann MC & Chave J',
+          year: '2009',
+          title: 'Data from: Towards a worldwide wood economics spectrum',
+          journal: 'Dryad, Dataset',
+          pages: '',
+          doi: 'https://doi.org/10.5061/dryad.234',
         },
         {
-          author: "Kohyama TS, Kohyama TI & Sheil D",
-          year: "2018",
+          author: 'Kohyama TS, Kohyama TI & Sheil D',
+          year: '2018',
           title:
-            "Definition and estimation of vital rates from repeated censuses: Choices, comparisons and bias corrections focusing on trees",
-          journal: "Methods in Ecology and Evolution",
-          pages: "9: 809-821",
-          doi: "https://doi.org/10.1111/2041-210X.12929",
+            'Definition and estimation of vital rates from repeated censuses: Choices, comparisons and bias corrections focusing on trees',
+          journal: 'Methods in Ecology and Evolution',
+          pages: '9: 809-821',
+          doi: 'https://doi.org/10.1111/2041-210X.12929',
         },
         {
-          author: "Kohyama TS, Kohyama TI & Sheil D",
-          year: "2019",
+          author: 'Kohyama TS, Kohyama TI & Sheil D',
+          year: '2019',
           title:
-            "Estimating net biomass production and loss from repeated measurements of trees in forests and woodlands: Formulae, biases and recommendations",
-          journal: "Forest Ecology and Management",
-          pages: "433: 729-740",
-          doi: "https://doi.org/10.1016/j.foreco.2018.11.010",
+            'Estimating net biomass production and loss from repeated measurements of trees in forests and woodlands: Formulae, biases and recommendations',
+          journal: 'Forest Ecology and Management',
+          pages: '433: 729-740',
+          doi: 'https://doi.org/10.1016/j.foreco.2018.11.010',
         },
       ],
-    };
+    }
   },
-};
+}
 </script>

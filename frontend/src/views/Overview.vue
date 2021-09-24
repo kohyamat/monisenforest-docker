@@ -4,26 +4,26 @@
       <v-card flat>
         <v-card-text v-if="plotSelected" class="text-center">
           <div class="text-h4 text--primary pb-2">
-            {{ plotSelected ? plotSelected.site_name : "" }}
+            {{ plotSelected ? plotSelected.site_name : '' }}
           </div>
           <div class="pb-4" style="font-size: 1.25em">
-            {{ plotSelected ? plotSelected.plot_name_jp : "" }}
+            {{ plotSelected ? plotSelected.plot_name_jp : '' }}
           </div>
           <div>
             {{
               plotSelected
-                ? "N" +
+                ? 'N' +
                   Math.round(plotSelected.lat * 1000) / 1000 +
-                  "˚, E" +
+                  '˚, E' +
                   Math.round(plotSelected.long * 1000) / 1000 +
-                  "˚, " +
+                  '˚, ' +
                   plotSelected.ele +
-                  " m a.s.l."
-                : ""
+                  ' m a.s.l.'
+                : ''
             }}
           </div>
           <div>
-            {{ plotSelected ? plotSelected.age : "" }}
+            {{ plotSelected ? plotSelected.age : '' }}
           </div>
         </v-card-text>
 
@@ -110,10 +110,10 @@
           :activator="`#${plotMouseOver ? plotMouseOver.plot_id : null}`"
         >
           <span class="font-weight-bold">
-            {{ plotMouseOver ? plotMouseOver.plot_id : "" }}
+            {{ plotMouseOver ? plotMouseOver.plot_id : '' }}
           </span>
           <br />
-          <span>{{ plotMouseOver ? plotMouseOver.site_name : "" }}</span>
+          <span>{{ plotMouseOver ? plotMouseOver.site_name : '' }}</span>
         </v-tooltip>
       </v-card>
     </v-col>
@@ -327,7 +327,7 @@
     <div class="text-center">
       <v-bottom-sheet v-model="sheetEmpty">
         <v-sheet class="text-center" height="200px">
-          <div class="py-6">No data files have been loaded.</div>
+          <div class="py-6">No data has been loaded.</div>
           <v-btn text color="red" @click="$router.push('data')">
             Add Data
           </v-btn>
@@ -338,20 +338,20 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 // Import components
-import MapJp from "../components/Map";
-import TreeComSummary from "../components/TreeComSummary.vue";
-import TreeComTurnover from "../components/TreeComTurnover.vue";
-import TreeSpSummary from "../components/TreeSpSummary.vue";
-import TreeSpTurnover from "../components/TreeSpTurnover.vue";
-import LitterAnnual from "../components/LitterAnnual.vue";
-import LitterEach from "../components/LitterEach.vue";
-import SeedAnnual from "../components/SeedAnnual.vue";
+import MapJp from '../components/Map'
+import TreeComSummary from '../components/TreeComSummary.vue'
+import TreeComTurnover from '../components/TreeComTurnover.vue'
+import TreeSpSummary from '../components/TreeSpSummary.vue'
+import TreeSpTurnover from '../components/TreeSpTurnover.vue'
+import LitterAnnual from '../components/LitterAnnual.vue'
+import LitterEach from '../components/LitterEach.vue'
+import SeedAnnual from '../components/SeedAnnual.vue'
 
-import plotInfo from "../assets/plot_info.json";
-const BASE_URL = "http://localhost:8000/api";
+import plotInfo from '../assets/plot_info.json'
+const BASE_URL = 'http://localhost:8000/api'
 
 export default {
   components: {
@@ -370,9 +370,9 @@ export default {
     plotMouseOver: undefined,
     tooltip: false,
     dtypeIcons: {
-      treeGBH: "mdi-pine-tree",
-      litter: "mdi-leaf",
-      seed: "mdi-seed",
+      treeGBH: 'mdi-pine-tree',
+      litter: 'mdi-leaf',
+      seed: 'mdi-seed',
     },
 
     toggleSingleColTree: false,
@@ -385,30 +385,33 @@ export default {
     litterAnnualData: null,
     litterEachData: null,
 
-    toggleSingleColSeed: false,
+    toggleSingleColSeed: true,
     seedAnnualData: null,
     seedEachData: null,
   }),
 
   computed: {
+    showGoToTop() {
+      return this.offsetTop > 20
+    },
     datafiles() {
-      return this.$store.getters.allDatafiles;
+      return this.$store.getters.allDatafiles
     },
     plotIdList() {
       // sort alphabetically
       return this.datafiles
         .map((e) => e.plot_id)
         .filter((element, index, self) => self.indexOf(element) === index)
-        .sort();
+        .sort()
     },
     plotDataType() {
-      let arr = {};
+      let arr = {}
       for (let i = 0; i < this.plotIdList.length; i++) {
         arr[this.plotIdList[i]] = this.datafiles
           .filter((e) => e.plot_id === this.plotIdList[i])
-          .map((e) => e.dtype);
+          .map((e) => e.dtype)
       }
-      return arr;
+      return arr
     },
     plotData() {
       return this.plotIdList.map((e) => {
@@ -421,32 +424,32 @@ export default {
           ele: plotInfo[e].ele,
           age: plotInfo[e].age,
           dtype: this.plotDataType[e],
-        };
-      });
+        }
+      })
     },
     sheetEmpty() {
-      return this.$store.getters.getEmpty;
+      return this.$store.getters.getEmpty
     },
   },
 
   watch: {
     plotSelected() {
-      this.readData();
+      this.readData()
     },
   },
 
   methods: {
     readData() {
       if (this.plotSelected) {
-        if (this.plotSelected.dtype.includes("treeGBH")) {
-          this.readTreeCensusData();
+        if (this.plotSelected.dtype.includes('treeGBH')) {
+          this.readTreeCensusData()
         }
 
-        if (this.plotSelected.dtype.includes("litter")) {
-          this.readLitterfallData();
+        if (this.plotSelected.dtype.includes('litter')) {
+          this.readLitterfallData()
         }
-        if (this.plotSelected.dtype.includes("seed")) {
-          this.readSeedfallData();
+        if (this.plotSelected.dtype.includes('seed')) {
+          this.readSeedfallData()
         }
       }
     },
@@ -454,150 +457,157 @@ export default {
     async readTreeComSummary() {
       axios
         .get(
-          BASE_URL + "/tree_com_summary/?plot_id=" + this.plotSelected.plot_id
+          BASE_URL + '/tree_com_summary/?plot_id=' + this.plotSelected.plot_id
         )
         .then((response) => {
           this.treeComSummaryData =
-            response.data.length > 0 ? response.data : null;
+            response.data.length > 0 ? response.data : null
         })
         .catch((error) => {
-          this.treeComSummaryData = null;
-          console.log(error);
-        });
+          this.treeComSummaryData = null
+          console.log(error)
+        })
     },
 
     async readTreeComTurnover() {
       axios
         .get(
-          BASE_URL + "/tree_com_turnover/?plot_id=" + this.plotSelected.plot_id
+          BASE_URL + '/tree_com_turnover/?plot_id=' + this.plotSelected.plot_id
         )
         .then((response) => {
           this.treeComTurnoverData =
-            response.data.length > 0 ? response.data : null;
+            response.data.length > 0 ? response.data : null
         })
         .catch((error) => {
-          this.treeComTurnoverData = null;
-          console.log(error);
-        });
+          this.treeComTurnoverData = null
+          console.log(error)
+        })
     },
 
     async readTreeSpSummary() {
       axios
         .get(
-          BASE_URL + "/tree_sp_summary/?plot_id=" + this.plotSelected.plot_id
+          BASE_URL + '/tree_sp_summary/?plot_id=' + this.plotSelected.plot_id
         )
         .then((response) => {
           this.treeSpSummaryData =
-            response.data.length > 0 ? response.data : null;
+            response.data.length > 0 ? response.data : null
         })
         .catch((error) => {
-          this.treeSpSummaryData = null;
-          console.log(error);
-        });
+          this.treeSpSummaryData = null
+          console.log(error)
+        })
     },
 
     async readTreeSpTurnover() {
       axios
         .get(
-          BASE_URL + "/tree_sp_turnover/?plot_id=" + this.plotSelected.plot_id
+          BASE_URL + '/tree_sp_turnover/?plot_id=' + this.plotSelected.plot_id
         )
         .then((response) => {
           this.treeSpTurnoverData =
-            response.data.length > 0 ? response.data : null;
+            response.data.length > 0 ? response.data : null
         })
         .catch((error) => {
-          this.treeSpTurnoverData = null;
-          console.log(error);
-        });
+          this.treeSpTurnoverData = null
+          console.log(error)
+        })
     },
 
     async readLitterEach() {
       axios
-        .get(BASE_URL + "/litter_each/?plot_id=" + this.plotSelected.plot_id)
+        .get(BASE_URL + '/litter_each/?plot_id=' + this.plotSelected.plot_id)
         .then((response) => {
-          this.litterEachData = response.data.length > 0 ? response.data : null;
+          this.litterEachData = response.data.length > 0 ? response.data : null
         })
         .catch((error) => {
-          this.litterEachData = null;
-          console.log(error);
-        });
+          this.litterEachData = null
+          console.log(error)
+        })
     },
 
     async readLitterAnnual() {
       axios
-        .get(BASE_URL + "/litter_annual/?plot_id=" + this.plotSelected.plot_id)
+        .get(BASE_URL + '/litter_annual/?plot_id=' + this.plotSelected.plot_id)
         .then((response) => {
           this.litterAnnualData =
-            response.data.length > 0 ? response.data : null;
+            response.data.length > 0 ? response.data : null
         })
         .catch((error) => {
-          this.litterAnnualData = null;
-          console.log(error);
-        });
+          this.litterAnnualData = null
+          console.log(error)
+        })
     },
 
     async readSeedEach() {
       axios
-        .get(BASE_URL + "/seed_each/?plot_id=" + this.plotSelected.plot_id)
+        .get(BASE_URL + '/seed_each/?plot_id=' + this.plotSelected.plot_id)
         .then((response) => {
-          this.seedEachData = response.data.length > 0 ? response.data : null;
+          this.seedEachData = response.data.length > 0 ? response.data : null
         })
         .catch((error) => {
-          this.seedEachData = null;
-          console.log(error);
-        });
+          this.seedEachData = null
+          console.log(error)
+        })
     },
 
     async readSeedAnnual() {
       axios
-        .get(BASE_URL + "/seed_annual/?plot_id=" + this.plotSelected.plot_id)
+        .get(BASE_URL + '/seed_annual/?plot_id=' + this.plotSelected.plot_id)
         .then((response) => {
-          this.seedAnnualData = response.data.length > 0 ? response.data : null;
+          this.seedAnnualData = response.data.length > 0 ? response.data : null
         })
         .catch((error) => {
-          this.seedAnnualData = null;
-          console.log(error);
-        });
+          this.seedAnnualData = null
+          console.log(error)
+        })
     },
 
     async readTreeCensusData() {
-      await this.readTreeComSummary();
-      await this.readTreeComTurnover();
-      await this.readTreeSpSummary();
-      await this.readTreeSpTurnover();
+      await this.readTreeComSummary()
+      await this.readTreeComTurnover()
+      await this.readTreeSpSummary()
+      await this.readTreeSpTurnover()
     },
 
     async readLitterfallData() {
-      await this.readLitterEach();
-      await this.readLitterAnnual();
+      await this.readLitterEach()
+      await this.readLitterAnnual()
     },
 
     async readSeedfallData() {
-      await this.readSeedEach();
-      await this.readSeedAnnual();
+      await this.readSeedEach()
+      await this.readSeedAnnual()
     },
 
     onPlotMouseOver(plot_id) {
-      this.tooltip = true;
-      this.plotMouseOver = this.plotData.filter(
-        (e) => e.plot_id === plot_id
-      )[0];
+      this.tooltip = true
+      this.plotMouseOver = this.plotData.filter((e) => e.plot_id === plot_id)[0]
     },
 
     onPlotMouseOut() {
-      this.tooltip = false;
-      this.plotMouseOver = undefined;
+      this.tooltip = false
+      this.plotMouseOver = undefined
     },
 
     onPlotClicked(plot_id) {
-      this.plotSelected = this.plotData.filter((e) => e.plot_id === plot_id)[0];
+      this.plotSelected = this.plotData.filter((e) => e.plot_id === plot_id)[0]
     },
   },
-};
+}
 </script>
 
 <style lang="scss">
 .v-data-table {
   white-space: nowrap;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(0);
 }
 </style>

@@ -30,24 +30,6 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
-  {
-    path: "/treegbh",
-    name: "TreeGBH",
-    component: () =>
-      import(/* webpackChunkName: "data" */ "../views/TreeGBH.vue"),
-  },
-  {
-    path: "/litterfall",
-    name: "Litterfall",
-    component: () =>
-      import(/* webpackChunkName: "data" */ "../views/Litterfall.vue"),
-  },
-  {
-    path: "/seedfall",
-    name: "Seedfall",
-    component: () =>
-      import(/* webpackChunkName: "data" */ "../views/Seedfall.vue"),
-  },
 ];
 
 const router = new VueRouter({

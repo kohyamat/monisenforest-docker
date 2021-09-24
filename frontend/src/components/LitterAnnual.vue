@@ -52,7 +52,7 @@
 
       <v-btn icon @click="showCaption = !showCaption">
         <v-icon>
-          {{ showCaption ? "mdi-chevron-up" : "mdi-chevron-down" }}
+          {{ showCaption ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
         </v-icon>
       </v-btn>
     </v-card-actions>
@@ -73,14 +73,14 @@
 </template>
 
 <script>
-import LineChart from "./LineChart.js";
+import LineChart from './LineChart.js'
 
 export default {
   components: {
     LineChart,
   },
 
-  props: ["data"],
+  props: ['data'],
 
   data: () => ({
     toggleChart: true,
@@ -88,17 +88,17 @@ export default {
     loaded: false,
     chartData: null,
     subtitle:
-      "Dry mass (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+      'Dry mass (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
     options: {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
-        position: "top",
+        position: 'top',
       },
       scales: {
         xAxes: [
           {
-            type: "linear",
+            type: 'linear',
             ticks: {
               stepSize: 1,
             },
@@ -115,74 +115,74 @@ export default {
       tooltips: {
         callbacks: {
           label: function (tooltipItem) {
-            return tooltipItem.yLabel;
+            return tooltipItem.yLabel
           },
         },
       },
       plugins: {
         colorschemes: {
-          scheme: "brewer.DarkTwo4",
+          scheme: 'brewer.DarkTwo4',
         },
       },
     },
 
     headers: [
       {
-        text: "Year",
-        value: "year",
-        label: "Year",
-        caption: "Calender year",
+        text: 'Year',
+        value: 'year',
+        label: 'Year',
+        caption: 'Calender year',
       },
       {
-        text: "Start date",
-        value: "t1",
-        label: "Start date of the trap installation period",
-        caption: "Start date of the trap installation period",
+        text: 'Start date',
+        value: 't1',
+        label: 'Start date of the trap installation period',
+        caption: 'Start date of the trap installation period',
       },
       {
-        text: "End Date",
-        value: "t2",
-        label: "End date of the trap installation period",
-        caption: "End date of the trap installation period",
+        text: 'End Date',
+        value: 't2',
+        label: 'End date of the trap installation period',
+        caption: 'End date of the trap installation period',
       },
       {
-        text: "Leaves",
-        value: "wdry_leaf",
-        label: "Annual litterfall dry mass of leaves",
+        text: 'Leaves',
+        value: 'wdry_leaf',
+        label: 'Annual litterfall dry mass of leaves',
         caption:
-          "Annual litterfall dry mass of leaves (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Annual litterfall dry mass of leaves (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
       {
-        text: "Branches",
-        value: "wdry_branch",
-        label: "Annual litterfall dry mass of branches",
+        text: 'Branches',
+        value: 'wdry_branch',
+        label: 'Annual litterfall dry mass of branches',
         caption:
-          "Annual litterfall dry mass of branches (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Annual litterfall dry mass of branches (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
       {
-        text: "Reproductive parts",
-        value: "wdry_rep",
-        label: "Annual litterfall dry mass of reproductive parts",
+        text: 'Reproductive parts',
+        value: 'wdry_rep',
+        label: 'Annual litterfall dry mass of reproductive parts',
         caption:
-          "Annual litterfall dry mass of reproductive parts (flowers, fruits, seeds, etc.) (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Annual litterfall dry mass of reproductive parts (flowers, fruits, seeds, etc.) (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
       {
-        text: "Total",
-        value: "wdry_all",
-        label: "Annual total litterfall dry mass",
+        text: 'Total',
+        value: 'wdry_all',
+        label: 'Annual total litterfall dry mass',
         caption:
-          "Annual total litterfall dry mass (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Annual total litterfall dry mass (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
     ],
   }),
 
   mounted() {
-    this.fillData();
+    this.fillData()
   },
 
   watch: {
     data() {
-      this.fillData();
+      this.fillData()
     },
   },
 
@@ -192,49 +192,49 @@ export default {
         labels: this.data.map((e) => Math.round(e.year * 10) / 10),
         datasets: [
           {
-            label: "Leaves",
+            label: 'Leaves',
             fill: false,
             data: this.data.map((e) => {
               return {
                 x: Math.round(e.year * 10) / 10,
                 y: e.wdry_leaf,
-              };
+              }
             }),
           },
           {
-            label: "Branches",
+            label: 'Branches',
             fill: false,
             data: this.data.map((e) => {
               return {
                 x: Math.round(e.year * 10) / 10,
                 y: e.wdry_branch,
-              };
+              }
             }),
           },
           {
-            label: "Reproductive parts",
+            label: 'Reproductive parts',
             fill: false,
             data: this.data.map((e) => {
               return {
                 x: Math.round(e.year * 10) / 10,
                 y: e.wdry_rep,
-              };
+              }
             }),
           },
           {
-            label: "Total",
+            label: 'Total',
             fill: false,
             data: this.data.map((e) => {
               return {
                 x: Math.round(e.year * 10) / 10,
                 y: e.wdry_all,
-              };
+              }
             }),
           },
         ],
-      };
-      this.loaded = true;
+      }
+      this.loaded = true
     },
   },
-};
+}
 </script>

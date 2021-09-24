@@ -132,7 +132,7 @@
 
       <v-btn icon @click="showCaption = !showCaption">
         <v-icon>{{
-          showCaption ? "mdi-chevron-up" : "mdi-chevron-down"
+          showCaption ? 'mdi-chevron-up' : 'mdi-chevron-down'
         }}</v-icon>
       </v-btn>
     </v-card-actions>
@@ -153,14 +153,14 @@
 </template>
 
 <script>
-import LineChart from "./LineChart.js";
+import LineChart from './LineChart.js'
 
 export default {
   components: {
     LineChart,
   },
 
-  props: ["data"],
+  props: ['data'],
 
   data: () => ({
     chartData: null,
@@ -168,12 +168,12 @@ export default {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
-        position: "top",
+        position: 'top',
       },
       scales: {
         xAxes: [
           {
-            type: "linear",
+            type: 'linear',
             ticks: {
               stepSize: 1,
             },
@@ -182,7 +182,7 @@ export default {
       },
       plugins: {
         colorschemes: {
-          scheme: "brewer.DarkTwo3",
+          scheme: 'brewer.DarkTwo3',
         },
       },
     },
@@ -192,153 +192,153 @@ export default {
 
     headers: [
       {
-        text: "T<sub>1</sub>",
-        value: "t1",
-        label: "T1",
-        caption: "Year of the first census",
+        text: 'T<sub>1</sub>',
+        value: 't1',
+        label: 'T1',
+        caption: 'Year of the first census',
       },
       {
-        text: "T<sub>2</sub>",
-        value: "t2",
-        label: "T2",
-        caption: "Year of the second census",
+        text: 'T<sub>2</sub>',
+        value: 't2',
+        label: 'T2',
+        caption: 'Year of the second census',
       },
       {
-        text: "N<sub>m</sub>",
-        value: "n_m",
-        label: "Nm",
-        caption: "Period mean number of stems (ha<sup>&minus;1</sup>)",
+        text: 'N<sub>m</sub>',
+        value: 'n_m',
+        label: 'Nm',
+        caption: 'Period mean number of stems (ha<sup>&minus;1</sup>)',
       },
       {
-        text: "B<sub>m</sub>",
-        value: "b_m",
-        label: "Bm",
+        text: 'B<sub>m</sub>',
+        value: 'b_m',
+        label: 'Bm',
         caption:
-          "Period mean above ground biomass (Mg &nbsp;ha<sup>&minus;1</sup>)",
+          'Period mean above ground biomass (Mg &nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>r</i>",
-        value: "r_rel",
-        label: "r",
+        text: '<i>r</i>',
+        value: 'r_rel',
+        label: 'r',
         caption:
-          "Relative (per-capita) instantneous recruitment rate (year<sup>&minus;1</sup>)",
+          'Relative (per-capita) instantneous recruitment rate (year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>m</i>",
-        value: "m_rel",
-        label: "m",
+        text: '<i>m</i>',
+        value: 'm_rel',
+        label: 'm',
         caption:
-          "Relative (per-capita) instantneous mortality rate (year<sup>&minus;1</sup>)",
+          'Relative (per-capita) instantneous mortality rate (year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>p</i>",
-        value: "p_rel",
-        label: "p",
+        text: '<i>p</i>',
+        value: 'p_rel',
+        label: 'p',
         caption:
-          "Relative (per-biomass) instantneous productivity rate by tree growth (year<sup>&minus;1</sup>)",
+          'Relative (per-biomass) instantneous productivity rate by tree growth (year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>l</i>",
-        value: "l_rel",
-        label: "l",
+        text: '<i>l</i>',
+        value: 'l_rel',
+        label: 'l',
         caption:
-          "Relative (per-biomass) instantneous loss rate by tree mortality (year<sup>&minus;1</sup>)",
+          'Relative (per-biomass) instantneous loss rate by tree mortality (year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>R</i>",
-        value: "r_abs",
-        label: "R",
+        text: '<i>R</i>',
+        value: 'r_abs',
+        label: 'R',
         caption:
-          "Absolute (per-area) instantneous recruitment rate (ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Absolute (per-area) instantneous recruitment rate (ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>M</i>",
-        value: "m_abs",
-        label: "M",
+        text: '<i>M</i>',
+        value: 'm_abs',
+        label: 'M',
         caption:
-          "Absolute (per-area) instantneous mortality rate (ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Absolute (per-area) instantneous mortality rate (ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>P</i>",
-        value: "p_abs",
-        label: "P",
+        text: '<i>P</i>',
+        value: 'p_abs',
+        label: 'P',
         caption:
-          "Absolute (per-area) instantneous productivity rate by tree growth (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Absolute (per-area) instantneous productivity rate by tree growth (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>L</i>",
-        value: "l_abs",
-        label: "L",
+        text: '<i>L</i>',
+        value: 'l_abs',
+        label: 'L',
         caption:
-          "Absolute (per-area) instantneous loss rate by tree mortality (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Absolute (per-area) instantneous loss rate by tree mortality (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
     ],
 
     btn: [
       {
-        text: "<i>r</i>&nbsp;&amp;&nbsp;<i>m</i>",
+        text: '<i>r</i>&nbsp;&amp;&nbsp;<i>m</i>',
         values: [
-          { label: "r", value: "r_rel" },
-          { label: "m", value: "m_rel" },
+          { label: 'r', value: 'r_rel' },
+          { label: 'm', value: 'm_rel' },
         ],
-        label: "Relative Density Turnover Rates (year<sup>&minus;1</sup>)",
+        label: 'Relative Density Turnover Rates (year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>p</i>&nbsp;&amp;&nbsp;<i>l</i>",
+        text: '<i>p</i>&nbsp;&amp;&nbsp;<i>l</i>',
         values: [
-          { label: "p", value: "p_rel" },
-          { label: "l", value: "l_rel" },
+          { label: 'p', value: 'p_rel' },
+          { label: 'l', value: 'l_rel' },
         ],
-        label: "Relative Biomass Turnover Rates (year<sup>&minus;1</sup>)",
+        label: 'Relative Biomass Turnover Rates (year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>R</i>&nbsp;&amp;&nbsp;<i>M</i>",
+        text: '<i>R</i>&nbsp;&amp;&nbsp;<i>M</i>',
         values: [
-          { label: "R", value: "r_abs" },
-          { label: "M", value: "m_abs" },
+          { label: 'R', value: 'r_abs' },
+          { label: 'M', value: 'm_abs' },
         ],
         label:
-          "Absolute Density Turnover Rates (ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Absolute Density Turnover Rates (ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
       {
-        text: "<i>P</i>&nbsp;&amp;&nbsp;<i>L</i>",
+        text: '<i>P</i>&nbsp;&amp;&nbsp;<i>L</i>',
         values: [
-          { label: "P", value: "p_abs" },
-          { label: "L", value: "l_abs" },
+          { label: 'P', value: 'p_abs' },
+          { label: 'L', value: 'l_abs' },
         ],
         label:
-          "Absolute Biomass Turnover Rates (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)",
+          'Absolute Biomass Turnover Rates (Mg&nbsp;ha<sup>&minus;1</sup>&nbsp;year<sup>&minus;1</sup>)',
       },
     ],
 
     select: {
-      text: "<i>r</i>&nbsp;&amp;&nbsp;<i>m</i>",
+      text: '<i>r</i>&nbsp;&amp;&nbsp;<i>m</i>',
       values: [
-        { label: "r", value: "r_rel" },
-        { label: "m", value: "m_rel" },
+        { label: 'r', value: 'r_rel' },
+        { label: 'm', value: 'm_rel' },
       ],
-      label: "Relative Density Turnover Rates (year<sup>&minus;1</sup>)",
+      label: 'Relative Density Turnover Rates (year<sup>&minus;1</sup>)',
     },
   }),
 
   mounted() {
-    this.fillData();
+    this.fillData()
   },
 
   watch: {
     data() {
-      this.fillData();
+      this.fillData()
     },
   },
 
   methods: {
     fillData() {
-      let vals = this.select.values;
+      let vals = this.select.values
       this.chartData = {
         labels: this.data.map(
           (o) =>
             String(Math.round(o.t1 * 10) / 10) +
-            "–" +
+            '–' +
             String(Math.round(o.t2 * 10) / 10)
         ),
         datasets: [
@@ -349,7 +349,7 @@ export default {
               return {
                 x: Math.round(o.t2 * 10) / 10,
                 y: o[vals[0].value],
-              };
+              }
             }),
           },
           {
@@ -359,25 +359,25 @@ export default {
               return {
                 x: Math.round(o.t2 * 10) / 10,
                 y: o[vals[1].value],
-              };
+              }
             }),
           },
           {
-            label: vals[0].label + " - " + vals[1].label,
+            label: vals[0].label + ' - ' + vals[1].label,
             fill: false,
             data: this.data.map((o) => {
               return {
                 x: Math.round(o.t2 * 10) / 10,
                 y: o[vals[0].value] - o[vals[1].value],
-              };
+              }
             }),
           },
         ],
-      };
-      this.loaded = true;
+      }
+      this.loaded = true
     },
   },
-};
+}
 </script>
 
 <style lang="scss">

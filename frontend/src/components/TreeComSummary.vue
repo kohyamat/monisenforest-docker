@@ -83,7 +83,7 @@
 
       <v-btn icon @click="showCaption = !showCaption">
         <v-icon>
-          {{ showCaption ? "mdi-chevron-up" : "mdi-chevron-down" }}
+          {{ showCaption ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
         </v-icon>
       </v-btn>
     </v-card-actions>
@@ -104,14 +104,14 @@
 </template>
 
 <script>
-import LineChart from "./LineChart.js";
+import LineChart from './LineChart.js'
 
 export default {
   components: {
     LineChart,
   },
 
-  props: ["data"],
+  props: ['data'],
 
   data: () => ({
     toggleChart: true,
@@ -127,7 +127,7 @@ export default {
       scales: {
         xAxes: [
           {
-            type: "linear",
+            type: 'linear',
             ticks: {
               stepSize: 1,
             },
@@ -144,7 +144,7 @@ export default {
       tooltips: {
         callbacks: {
           label: function (tooltipItem) {
-            return tooltipItem.yLabel;
+            return tooltipItem.yLabel
           },
         },
       },
@@ -152,93 +152,93 @@ export default {
 
     headers: [
       {
-        text: "Year",
-        value: "year",
-        label: "Year",
+        text: 'Year',
+        value: 'year',
+        label: 'Year',
         caption:
-          "Census year (calendar year - 1 for plots surveyed in the early spring)",
+          'Census year (calendar year - 1 for plots surveyed in the early spring)',
       },
       {
-        text: "N<sub>stem</sub>",
-        value: "nstem",
-        label: "N stem",
-        caption: "Number of stems (ha<sup>&minus;1</sup>)",
+        text: 'N<sub>stem</sub>',
+        value: 'nstem',
+        label: 'N stem',
+        caption: 'Number of stems (ha<sup>&minus;1</sup>)',
       },
       {
-        text: "N<sub>species</sub>",
-        value: "nsp",
-        label: "N species",
-        caption: "Number of species",
+        text: 'N<sub>species</sub>',
+        value: 'nsp',
+        label: 'N species',
+        caption: 'Number of species',
       },
       {
-        text: "B",
-        value: "b",
-        label: "Above ground biomass",
-        caption: "Above ground biomass (Mg&nbsp;ha<sup>&minus;1</sup>)",
+        text: 'B',
+        value: 'b',
+        label: 'Above ground biomass',
+        caption: 'Above ground biomass (Mg&nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "BA",
-        value: "ba",
-        label: "BA",
-        caption: "Basal area (m<sup>2</sup>&nbsp;ha<sup>&minus;1</sup>)",
+        text: 'BA',
+        value: 'ba',
+        label: 'BA',
+        caption: 'Basal area (m<sup>2</sup>&nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "Richness",
-        value: "richness",
-        label: "Richness",
+        text: 'Richness',
+        value: 'richness',
+        label: 'Richness',
         caption:
-          "Expected number of species in a sample of 100 stems (rarefaction species richness)",
+          'Expected number of species in a sample of 100 stems (rarefaction species richness)',
       },
       {
-        text: "Diversity",
-        value: "shannon",
-        label: "Diversity",
-        caption: "Shannon index",
+        text: 'Diversity',
+        value: 'shannon',
+        label: 'Diversity',
+        caption: 'Shannon index',
       },
     ],
 
     btn: [
       {
-        text: "N",
-        value: "nstem",
-        label: "Number of Stems (ha<sup>&minus;1</sup>)",
+        text: 'N',
+        value: 'nstem',
+        label: 'Number of Stems (ha<sup>&minus;1</sup>)',
       },
       {
-        text: "B",
-        value: "b",
-        label: "Above Ground Biomass (Mg&nbsp;ha<sup>&minus;1</sup>)",
+        text: 'B',
+        value: 'b',
+        label: 'Above Ground Biomass (Mg&nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "BA",
-        value: "ba",
-        label: "Basal Area (m<sup>2</sup>&nbsp;ha<sup>&minus;1</sup>)",
+        text: 'BA',
+        value: 'ba',
+        label: 'Basal Area (m<sup>2</sup>&nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "Richness",
-        value: "richness",
-        label: "Rarefaction Species Richness (n = 100 stems)",
+        text: 'Richness',
+        value: 'richness',
+        label: 'Rarefaction Species Richness (n = 100 stems)',
       },
       {
-        text: "Diversity",
-        value: "shannon",
-        label: "Shannon Index",
+        text: 'Diversity',
+        value: 'shannon',
+        label: 'Shannon Index',
       },
     ],
 
     select: {
-      text: "N",
-      value: "nstem",
-      label: "Number of Stems (ha<sup>&minus;1</sup>)",
+      text: 'N',
+      value: 'nstem',
+      label: 'Number of Stems (ha<sup>&minus;1</sup>)',
     },
   }),
 
   mounted() {
-    this.fillData();
+    this.fillData()
   },
 
   watch: {
     data() {
-      this.fillData();
+      this.fillData()
     },
   },
 
@@ -249,21 +249,21 @@ export default {
         datasets: [
           {
             label: this.select.label,
-            backgroundColor: "rgba(103, 58, 183, 0.2)",
-            borderColor: "rgba(103, 58, 183, 0.8)",
-            pointBorderColor: "rgba(103, 58, 183, 0.8)",
-            pointBackgroundColor: "rgba(103, 58, 183, 0.4)",
+            backgroundColor: 'rgba(103, 58, 183, 0.2)',
+            borderColor: 'rgba(103, 58, 183, 0.8)',
+            pointBorderColor: 'rgba(103, 58, 183, 0.8)',
+            pointBackgroundColor: 'rgba(103, 58, 183, 0.4)',
             data: this.data.map((o) => {
               return {
                 x: Math.round(o.year * 10) / 10,
                 y: o[this.select.value],
-              };
+              }
             }),
           },
         ],
-      };
-      this.loaded = true;
+      }
+      this.loaded = true
     },
   },
-};
+}
 </script>

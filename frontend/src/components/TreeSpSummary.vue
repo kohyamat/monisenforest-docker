@@ -146,7 +146,7 @@
 
       <v-btn icon @click="showCaption = !showCaption">
         <v-icon>
-          {{ showCaption ? "mdi-chevron-up" : "mdi-chevron-down" }}
+          {{ showCaption ? 'mdi-chevron-up' : 'mdi-chevron-down' }}
         </v-icon>
       </v-btn>
     </v-card-actions>
@@ -167,17 +167,17 @@
 </template>
 
 <script>
-import LineChart from "./LineChart.js";
+import LineChart from './LineChart.js'
 
 export default {
   components: {
     LineChart,
   },
 
-  props: ["data", "toggleSingleCol"],
+  props: ['data', 'toggleSingleCol'],
 
   data: () => ({
-    search: "",
+    search: '',
     spList: [],
     spSelected1: [],
     spSelected: [],
@@ -186,12 +186,12 @@ export default {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
-        position: "top",
+        position: 'top',
       },
       scales: {
         xAxes: [
           {
-            type: "linear",
+            type: 'linear',
             ticks: {
               stepSize: 1,
             },
@@ -207,7 +207,7 @@ export default {
       },
       plugins: {
         colorschemes: {
-          scheme: "brewer.Paired12",
+          scheme: 'brewer.Paired12',
         },
       },
     },
@@ -217,136 +217,136 @@ export default {
 
     headers: [
       {
-        text: "Year",
-        value: "year",
-        label: "Year",
+        text: 'Year',
+        value: 'year',
+        label: 'Year',
         caption:
-          "Census year (calendar year - 1 for plots surveyed in the early spring)",
+          'Census year (calendar year - 1 for plots surveyed in the early spring)',
       },
       {
-        text: "Name",
-        value: "species_jp",
-        label: "Name",
-        caption: "Japanese name",
+        text: 'Name',
+        value: 'species_jp',
+        label: 'Name',
+        caption: 'Japanese name',
       },
       {
-        text: "Species",
-        value: "species",
-        label: "Species",
-        caption: "Scientific name",
+        text: 'Species',
+        value: 'species',
+        label: 'Species',
+        caption: 'Scientific name',
       },
       {
-        text: "Family",
-        value: "family",
-        label: "Family",
-        caption: "Family name",
+        text: 'Family',
+        value: 'family',
+        label: 'Family',
+        caption: 'Family name',
       },
       {
-        text: "N",
-        value: "n",
-        label: "N",
-        caption: "Number of stems (ha<sup>&minus;1</sup>)",
+        text: 'N',
+        value: 'n',
+        label: 'N',
+        caption: 'Number of stems (ha<sup>&minus;1</sup>)',
       },
       {
-        text: "B",
-        value: "b",
-        label: "B",
-        caption: "Above ground biomass (Mg&nbsp;ha<sup>&minus;1</sup>)",
+        text: 'B',
+        value: 'b',
+        label: 'B',
+        caption: 'Above ground biomass (Mg&nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "BA",
-        value: "ba",
-        label: "BA",
-        caption: "Basal area (m<sup>2</sup>&nbsp;ha<sup>&minus;1</sup>)",
+        text: 'BA',
+        value: 'ba',
+        label: 'BA',
+        caption: 'Basal area (m<sup>2</sup>&nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "%N",
-        value: "n_prop",
-        label: "%N",
-        caption: "Proportion of species based on number of stems (%)",
+        text: '%N',
+        value: 'n_prop',
+        label: '%N',
+        caption: 'Proportion of species based on number of stems (%)',
       },
       {
-        text: "%B",
-        value: "b_prop",
-        label: "%B",
-        caption: "Proportion of species based on above ground biomass (%)",
+        text: '%B',
+        value: 'b_prop',
+        label: '%B',
+        caption: 'Proportion of species based on above ground biomass (%)',
       },
       {
-        text: "%BA",
-        value: "ba_prop",
-        label: "%BA",
-        caption: "Proportion of species based on basal area (%)",
+        text: '%BA',
+        value: 'ba_prop',
+        label: '%BA',
+        caption: 'Proportion of species based on basal area (%)',
       },
     ],
 
     btn: [
       {
-        text: "N",
-        value: "n",
-        label: "Number of Stems (ha<sup>&minus;1</sup>)",
+        text: 'N',
+        value: 'n',
+        label: 'Number of Stems (ha<sup>&minus;1</sup>)',
       },
       {
-        text: "B",
-        value: "b",
-        label: "Above ground biomass (Mg&nbsp;ha<sup>&minus;1</sup>)",
+        text: 'B',
+        value: 'b',
+        label: 'Above ground biomass (Mg&nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "BA",
-        value: "ba",
-        label: "Basal Area (m<sup>2</sup>&nbsp;ha<sup>&minus;1</sup>)",
+        text: 'BA',
+        value: 'ba',
+        label: 'Basal Area (m<sup>2</sup>&nbsp;ha<sup>&minus;1</sup>)',
       },
       {
-        text: "%N",
-        value: "n_prop",
-        label: "Proportion of species based on number of stems (%)",
+        text: '%N',
+        value: 'n_prop',
+        label: 'Proportion of species based on number of stems (%)',
       },
       {
-        text: "%B",
-        value: "b_prop",
-        label: "Proportion of species based on above ground biomass (%)",
+        text: '%B',
+        value: 'b_prop',
+        label: 'Proportion of species based on above ground biomass (%)',
       },
       {
-        text: "%BA",
-        value: "ba_prop",
-        label: "Proportion of species based on basal area (%)",
+        text: '%BA',
+        value: 'ba_prop',
+        label: 'Proportion of species based on basal area (%)',
       },
     ],
 
     select: {
-      text: "N",
-      value: "n",
-      label: "Number of Stems (ha<sup>&minus;1</sup>)",
+      text: 'N',
+      value: 'n',
+      label: 'Number of Stems (ha<sup>&minus;1</sup>)',
     },
   }),
 
   mounted() {
-    this.getSpList();
+    this.getSpList()
   },
 
   computed: {
     filteredData() {
-      return this.data.filter((d) => this.spSelected.includes(d.species));
+      return this.data.filter((d) => this.spSelected.includes(d.species))
     },
     selectAllSpecies() {
-      return this.spSelected.length === this.spList.length;
+      return this.spSelected.length === this.spList.length
     },
     selectSomeSpecies() {
-      return this.spSelected.length > 0 && !this.selectAllSpecies;
+      return this.spSelected.length > 0 && !this.selectAllSpecies
     },
     iconSpecies() {
-      if (this.selectAllSpecies) return "mdi-close-box";
-      if (this.selectSomeSpecies) return "mdi-minus-box";
-      return "mdi-checkbox-blank-outline";
+      if (this.selectAllSpecies) return 'mdi-close-box'
+      if (this.selectSomeSpecies) return 'mdi-minus-box'
+      return 'mdi-checkbox-blank-outline'
     },
   },
 
   watch: {
     data() {
-      this.getSpList();
+      this.getSpList()
     },
 
     filteredData() {
-      this.fillData();
+      this.fillData()
     },
   },
 
@@ -357,7 +357,7 @@ export default {
           return {
             species_jp: e.species_jp,
             species: e.species,
-          };
+          }
         })
         .filter(
           (element, index, self) =>
@@ -366,26 +366,26 @@ export default {
                 e.species_jp === element.species_jp &&
                 e.species === element.species
             ) === index
-        );
-      this.spSelected = this.spList.map((o) => o.species).slice(0, 3);
+        )
+      this.spSelected = this.spList.map((o) => o.species).slice(0, 3)
     },
 
     toggleSpecies() {
       this.$nextTick(() => {
         if (this.selectAllSpecies) {
-          this.spSelected = [];
+          this.spSelected = []
         } else {
-          this.spSelected = this.spList.map((o) => o.species).slice();
+          this.spSelected = this.spList.map((o) => o.species).slice()
         }
-      });
+      })
     },
 
     makeDatasets() {
-      let resArray = [];
+      let resArray = []
       for (let i = 0; i < this.spSelected.length; i++) {
         let subItems = this.filteredData.filter(
           (e) => e.species === this.spSelected[i]
-        );
+        )
         resArray.push({
           label: this.spSelected[i],
           fill: false,
@@ -393,20 +393,20 @@ export default {
             return {
               x: Math.round(o.year * 10) / 10,
               y: o[this.select.value],
-            };
+            }
           }),
-        });
+        })
       }
-      return resArray;
+      return resArray
     },
 
     fillData() {
       this.chartData = {
         // labels: this.years,
         datasets: this.makeDatasets(),
-      };
-      this.loaded = true;
+      }
+      this.loaded = true
     },
   },
-};
+}
 </script>
