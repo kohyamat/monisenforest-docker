@@ -57,7 +57,7 @@
               <v-card>
                 <v-card-title class="justify-center">
                   Are you sure you want to delete
-                  {{ selectedData.length > 1 ? "these files?" : "this file?" }}
+                  {{ selectedData.length > 1 ? 'these files?' : 'this file?' }}
                 </v-card-title>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -99,8 +99,10 @@
                 </v-card-text>
 
                 <v-card-actions>
+                  <v-spacer></v-spacer>
                   <v-btn color="teal" text @click="closeDialog"> Cancel </v-btn>
                   <v-btn text color="teal" @click="submitFiles"> Submit </v-btn>
+                  <v-spacer></v-spacer>
                 </v-card-actions>
               </v-card>
             </v-dialog>
@@ -111,28 +113,40 @@
           </template>
         </v-data-table>
 
-        <v-dialog v-model="dialogUpdate" max-width="550px">
+        <v-dialog v-model="dialogUpdate" persistent max-width="550px">
           <v-card>
             <v-card-title class="justify-center">
-              {{ updateMessage }}
+              {{ updateData ? updateData.message : '' }}
             </v-card-title>
             <v-card-text class="text-center">
               Do you want to update?
             </v-card-text>
             <v-card-actions>
-              <v-btn color="teal darken-1" text @click="closeDialogUpdate">
+              <v-spacer></v-spacer>
+              <v-btn color="teal darken-1" text @click="updateDataCancel">
                 Cancel
               </v-btn>
               <v-btn color="teal darken-1" text @click="updateDataConfirm">
                 OK
               </v-btn>
+              <v-checkbox
+                class="my-checkbox"
+                v-if="updateList.length > 0"
+                v-model="applyToAll"
+                label="Apply to all"
+                color="teal darken-1"
+              ></v-checkbox>
+
+              <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
 
         <v-dialog v-model="dialogError" max-width="550px">
           <v-card>
-            <v-card-text class="text-center">{{ errorMessage }}</v-card-text>
+            <v-card-title class="justify-center">{{
+              errorMessage
+            }}</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="teal darken-1" text @click="closeDialogError"
@@ -148,9 +162,9 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
-const BASE_URL = "http://localhost:8000/api";
+const BASE_URL = 'http://localhost:8000/api'
 
 export default {
   data() {
@@ -160,150 +174,190 @@ export default {
       dialogUpdate: false,
       dialogError: false,
       loading: false,
+      applyToAll: false,
       headers: [
         {
-          text: "Plot ID",
-          align: "start",
-          value: "plot_id",
+          text: 'Plot ID',
+          align: 'start',
+          value: 'plot_id',
         },
-        { text: "Site Name", value: "name" },
-        { text: "File Name", value: "filename" },
-        { text: "Data Type", value: "dtype" },
-        { text: "Date Created", value: "date" },
-        { text: "File Size (KB)", value: "size" },
+        { text: 'Site Name', value: 'name' },
+        { text: 'File Name', value: 'filename' },
+        { text: 'Data Type', value: 'dtype' },
+        { text: 'Date Created', value: 'date' },
+        { text: 'File Size (KB)', value: 'size' },
       ],
-      editIndex: -1,
       updateData: null,
-      updateMessage: "",
-      errorMessage: "",
+      updateList: [],
+      errorMessage: '',
+      errorList: [],
       selectedFiles: [],
       selectedData: [],
-      search: "",
+      search: '',
       onSearch: false,
-    };
+    }
   },
 
   computed: {
     datafiles() {
-      return this.$store.getters.allDatafiles;
+      return this.$store.getters.allDatafiles
     },
   },
 
   watch: {
     dialog(val) {
-      val || this.closeDialog();
+      val || this.closeDialog()
     },
 
     dialogDelete(val) {
-      val || this.closeDialogDelete();
+      val || this.closeDialogDelete()
     },
 
-    dialogUpdate(val) {
-      val || this.closeDialogUpdate();
+    dialogError(val) {
+      val || this.closeDialogError()
     },
 
     loading(val) {
-      if (!val) return;
+      if (!val) return
     },
   },
 
   methods: {
     async submitFile(formData) {
       return axios
-        .post(BASE_URL + "/datafiles/upload/", formData)
+        .post(BASE_URL + '/datafiles/upload/', formData)
         .then((response) => {
-          console.log(response.data.message);
+          console.log(response.data.filename + ' has been successfully loaded.')
+          return 0
         })
         .catch((err) => {
-          console.log(err);
+          console.log(err)
           if (err.response.status == 400) {
-            this.updateMessage = err.response.data["message"];
-            this.editIndex = err.response.data["id"];
-            this.updateData = err.response.data["data"];
-            this.dialogUpdate = true;
+            this.updateList.push(err.response.data)
+            return 1
           } else {
-            this.dialogError = true;
-            this.errorMessage = err.response.data["detail"];
+            this.errorList.push(err.response.data.detail)
+            return 2
           }
-        });
+        })
     },
 
-    submitFiles() {
-      this.dialog = false;
+    async submitFiles() {
+      this.dialog = false
       if (this.selectedFiles.length > 0) {
-        this.loading = true;
-        Promise.all(
-          this.selectedFiles.map(async (file) => {
-            let formData = new FormData();
-            formData.append("file", file);
-            await this.submitFile(formData);
-          })
-        ).then(() => {
-          this.$store.dispatch("getDatafiles");
-          this.loading = false;
-        });
+        this.loading = true
+        let promiseArray = this.selectedFiles.map((file) => {
+          let formData = new FormData()
+          formData.append('file', file)
+          return this.submitFile(formData)
+        })
+        await Promise.all(promiseArray)
+        this.$store.dispatch('getDatafiles')
+        this.loading = false
+        if (this.updateList.length > 0) {
+          this.updateDataAsk()
+        } else if (this.errorList.length > 0) {
+          this.showDialogError()
+        }
       }
     },
 
     closeDialog() {
-      this.dialog = false;
-      this.selectedFiles = [];
+      this.dialog = false
+      this.selectedFiles = []
     },
 
-    async deleteFile(index) {
-      axios.delete(BASE_URL + "/datafiles/" + index + "/").then((response) => {
-        console.log(response.data.message);
-      });
+    deleteFile(index) {
+      return axios.delete(BASE_URL + '/datafiles/' + index + '/')
     },
 
-    deleteFiles() {
-      this.dialogDelete = false;
+    async deleteFiles() {
+      this.dialogDelete = false
       if (this.selectedData.length > 0) {
-        this.loading = true;
-        Promise.all(
-          this.selectedData.map(async (d) => {
-            await this.deleteFile(d.id);
-          })
-        ).then(() => {
-          this.$store.dispatch("getDatafiles");
-          this.selectedData = [];
-          this.loading = false;
-        });
+        this.loading = true
+        let promiseArray = this.selectedData.map((e) => {
+          return this.deleteFile(e.id)
+        })
+        let results = await Promise.all(promiseArray)
+        results.forEach((e) => console.log(e.data.message))
+        this.$store.dispatch('getDatafiles')
+        this.selectedData = []
+        this.loading = false
       }
     },
 
     closeDialogDelete() {
-      this.dialogDelete = false;
+      this.dialogDelete = false
     },
 
-    updateDataConfirm() {
-      this.dialogUpdate = false;
-      this.loading = true;
-      axios
-        .put(BASE_URL + "/datafiles/" + this.editIndex + "/", this.updateData)
-        .then((response) => {
-          console.log(response.data.message);
-          this.$store.dispatch("getDatafiles");
-          this.closeDialogUpdate();
-          this.loading = false;
-        });
+    updateDataAsk() {
+      this.updateData = this.updateList.pop()
+      if (this.applyToAll) {
+        this.updateDataConfirm()
+      } else {
+        this.dialogUpdate = true
+      }
     },
 
-    closeDialogUpdate() {
-      this.dialogUpdate = false;
-      this.$nextTick(() => {
-        this.updateData = null;
-        this.updateMessage = "";
-        this.editIndex = -1;
-      });
+    async updateDataConfirm() {
+      this.loading = true
+      this.dialogUpdate = false
+      let response = await axios.put(
+        BASE_URL + '/datafiles/' + this.updateData.id + '/',
+        this.updateData.data
+      )
+      console.log(response.data.message)
+      this.$store.dispatch('getDatafiles')
+      this.loading = false
+      if (this.updateList.length > 0) {
+        this.updateDataAsk()
+      } else {
+        this.updateData = null
+        this.applyToAll = false
+        if (this.errorList.length > 0) {
+          this.showDialogError()
+        }
+      }
+    },
+
+    updateDataCancel() {
+      this.dialogUpdate = false
+      if (this.applyToAll) {
+        this.updateData = null
+        this.updateList = []
+        this.applyToAll = false
+        if (this.errorList.length > 0) {
+          this.showDialogError()
+        }
+      } else if (this.updateList.length > 0) {
+        this.updateDataAsk()
+      } else {
+        this.updateData = null
+        if (this.errorList.length > 0) {
+          this.showDialogError()
+        }
+      }
+    },
+
+    showDialogError() {
+      this.errorMessage = this.errorList.pop()
+      this.dialogError = true
     },
 
     closeDialogError() {
-      this.dialogError = false;
-      this.$nextTick(() => {
-        this.errorMessage = "";
-      });
+      this.dialogError = false
+      if (this.errorList.length > 0) {
+        this.showDialogError()
+      } else {
+        this.errorMessage = ''
+      }
     },
   },
-};
+}
 </script>
+
+<style>
+.my-checkbox .v-label {
+  font-size: 14px;
+}
+</style>
