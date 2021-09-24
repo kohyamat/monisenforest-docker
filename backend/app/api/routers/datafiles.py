@@ -100,7 +100,7 @@ async def delete_datafile(
     query = delete(models.Datafile).where(models.Datafile.id == id)
     await session.execute(query)
     await session.commit()
-    return {"Message": "Deleted id={} from 'datafiles'".format(id)}
+    return {"message": "Deleted datafile_id = {}".format(id)}
 
 
 @router.post(
@@ -285,7 +285,7 @@ async def update_plot(
     id: int,
     datafile_update: schemas.DatafileUpdate,
     session: AsyncSession = Depends(get_session),
-) -> None:
+) -> Optional[Dict[Any, Any]]:
     values = datafile_update.dict()
     tmppath = Path(values.pop("tmppath"))
     query = update(models.Datafile).where(models.Datafile.id == id).values(**values)
@@ -303,6 +303,7 @@ async def update_plot(
         )
     finally:
         tmppath.unlink()
+        return {"message": "Updated datafile_id = {}".format(id)}
 
 
 async def delete_data_summary(id: int, dtype: str, session: AsyncSession) -> None:
