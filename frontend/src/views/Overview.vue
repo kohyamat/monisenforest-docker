@@ -33,23 +33,17 @@
           <div>observation data of the Monitoring Sites 1000.</div>
         </v-card-text>
 
-        <v-select
+        <v-autocomplete
           v-model="plotSelected"
           color="teal"
           :items="plotData"
-          item-value="plot_id"
+          item-text="text"
           label="Select Forest Plot"
           class="pa-4"
           clearable
           return-object
         >
-          <template slot="item" slot-scope="data">
-            {{ data.item.plot_id }} — {{ data.item.site_name }}
-          </template>
-          <template slot="selection" slot-scope="data">
-            {{ data.item.plot_id }}
-          </template>
-        </v-select>
+        </v-autocomplete>
 
         <div v-if="plotSelected" class="text-center">
           <v-btn
@@ -385,7 +379,7 @@ export default {
     litterAnnualData: null,
     litterEachData: null,
 
-    toggleSingleColSeed: true,
+    toggleSingleColSeed: false,
     seedAnnualData: null,
     seedEachData: null,
   }),
@@ -417,6 +411,7 @@ export default {
       return this.plotIdList.map((e) => {
         return {
           plot_id: e,
+          text: e + ' — ' + plotInfo[e].site_name,
           site_name: plotInfo[e].site_name,
           plot_name_jp: plotInfo[e].plot_name,
           long: plotInfo[e].long,
