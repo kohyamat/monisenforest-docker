@@ -56,14 +56,33 @@
 
     <v-main>
       <!-- Provides the application the proper gutter -->
-      <v-container fluid>
-        <router-view></router-view>
-      </v-container>
+      <v-container fluid> <router-view /> </v-container>
     </v-main>
+
+    <v-fab-transition>
+      <v-btn
+        v-show="fab"
+        v-scroll="onScroll"
+        bottom
+        class="transition-swing"
+        color="teal"
+        fab
+        dark
+        fixed
+        small
+        right
+        style="z-index: 6"
+        @click="toTop"
+      >
+        <v-icon> mdi-chevron-up </v-icon>
+      </v-btn>
+    </v-fab-transition>
 
     <v-bottom-sheet v-model="sheetNetworkError">
       <v-sheet class="text-center" height="200px">
-        <div class="py-6">Network Error: unable to connect to the backend API</div>
+        <div class="py-6">
+          Network Error: unable to connect to the backend API
+        </div>
         <v-btn text color="red" @click="sheetNetworkError = !sheetNetworkError">
           Dismiss
         </v-btn>
@@ -110,50 +129,64 @@ export default {
       drawer: null,
       items: [
         {
-          title: "Overview",
-          icon: "mdi-view-dashboard",
-          path: "/",
+          title: 'Overview',
+          icon: 'mdi-view-dashboard',
+          path: '/',
         },
         {
-          title: "Data Manager",
-          icon: "mdi-file-table",
-          path: "/Data",
+          title: 'Data Manager',
+          icon: 'mdi-file-table',
+          path: '/Data',
         },
         {
-          title: "Species List",
-          icon: "mdi-view-list",
-          path: "/Species",
+          title: 'Species List',
+          icon: 'mdi-view-list',
+          path: '/Species',
         },
         {
-          title: "About",
-          icon: "mdi-information",
-          path: "/about",
+          title: 'About',
+          icon: 'mdi-information',
+          path: '/about',
         },
       ],
       sheetNetworkError: false,
-    };
+      fab: false,
+    }
   },
 
   mounted() {
-    this.$store.dispatch("getDatafiles");
+    this.$store.dispatch('getDatafiles')
   },
 
   computed: {
     networkStatus() {
-      return this.$store.getters.getNetworkStatus;
+      return this.$store.getters.getNetworkStatus
     },
   },
 
   watch: {
     networkStatus() {
-      if (this.networkStatus === "error") {
-        this.sheetNetworkError = true;
+      if (this.networkStatus === 'error') {
+        this.sheetNetworkError = true
       }
     },
   },
 
-  methods: {},
-};
+  methods: {
+    onScroll() {
+      if (typeof window === 'undefined') return
+
+      const top = window.pageYOffset || document.documentElement.offsetTop || 0
+      this.fab = top > 200
+    },
+    toTop() {
+      if (this.$route.hash) {
+        this.$router.push({ hash: '' })
+      }
+      this.$vuetify.goTo(0)
+    },
+  },
+}
 </script>
 
 <style lang="scss">
