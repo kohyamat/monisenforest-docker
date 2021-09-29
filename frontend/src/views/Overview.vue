@@ -29,8 +29,8 @@
 
         <v-card-text v-if="!plotSelected" class="text-center">
           <div class="text-h4 text--primary pb-4">MoniSenForest</div>
-          <div>Application for analysing permanent forest plot</div>
-          <div>observation data of the Monitoring Sites 1000.</div>
+          <div>Data summarization and visualization tool</div>
+          <div>for permanent forest plot observations</div>
         </v-card-text>
 
         <v-autocomplete

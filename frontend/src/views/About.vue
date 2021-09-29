@@ -7,8 +7,9 @@
         </v-layout>
         <div class="text-h2 py-6" style="text-align: center">MoniSenForest</div>
         <p class="text-body-1" style="text-align: center">
-          Application for analysing permanent forest plot observation data (tree
-          census and litterfall survey) of the Monitoring Site 1000.
+          Data summarization and visualization tool for permanent forest plot
+          observations (tree census and litterfall survey) of the Monitoring
+          Site 1000.
         </p>
 
         <div class="text-h4 py-6">About Monitoring Sites 1000</div>

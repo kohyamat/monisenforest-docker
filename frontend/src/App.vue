@@ -71,7 +71,7 @@
         fixed
         small
         right
-        style="z-index: 6"
+        style="z-index: 6; marginBottom: 14px"
         @click="toTop"
       >
         <v-icon> mdi-chevron-up </v-icon>
