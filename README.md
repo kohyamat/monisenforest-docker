@@ -45,3 +45,6 @@ The data collected by the Monitoring Sites 1000 project is publicly available an
 
 - [Tree census data](http://www.biodic.go.jp/moni1000/findings/data/index_file.html) from 61 forest plots (ca. 1 ha each) in 49 sites in Japan (Ishihara et al. 2011, Ecol. Res.).
 - [Litterfall and seedfall monitoring data](http://www.biodic.go.jp/moni1000/findings/data/index_file_LitterSeed.html) from 21 forest plots in 20 sites in Japan (Suzuki et al. 2012, Ecol. Res.).
+
+## Screenshot
+![image](https://user-images.githubusercontent.com/6261781/139201606-6bd85137-c116-4ddc-9f2a-e86770a9f521.jpg)
