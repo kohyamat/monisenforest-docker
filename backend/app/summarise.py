@@ -234,9 +234,12 @@ def sp_sum(
 
 
 def shannon_index(x):
-    x = x[x > 0]
-    p = x / x.sum()
-    return -sum(p * np.log(p))
+    if len(x) > 1:
+        x = x[x > 0]
+        p = x / x.sum()
+        return -sum(p * np.log(p))
+    else:
+        return 0.0
 
 
 def rarefaction(n, sample):
@@ -258,7 +261,7 @@ def rarefaction(n, sample):
                 for i in x
             ]
         )
-        return sum(1 - lprob)
+        return float(sum(1 - lprob))
 
     return np.apply_along_axis(f, 0, n_, sample=sample)
 
@@ -511,8 +514,13 @@ class TreeSummary(object):
 
         # sort by biomass
         sp_b, sp_uniq = group_sum(self.w_mat[:, -1], sp_list_)
-        sp_order = np.argsort(sp_b[np.where(sp_uniq != "Others")])[::-1]
-        sp_uniq = np.append(sp_uniq[np.where(sp_uniq != "Others")][sp_order], "Others")
+        if "Others" in sp_uniq:
+            sp_order = np.argsort(sp_b[np.where(sp_uniq != "Others")])[::-1]
+            sp_uniq = np.append(
+                sp_uniq[np.where(sp_uniq != "Others")][sp_order], "Others"
+            )
+        else:
+            sp_uniq = sp_uniq[np.argsort(sp_b)]
 
         # compute turnover rates for each species
         k = self.dbh_mat.shape[1]
