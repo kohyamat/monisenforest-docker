@@ -410,10 +410,12 @@ class TreeSummary(object):
                 self.plot_area = 1.0
                 # raise ValueError("Plot area needed")
 
-        self.sp_list = [
-            dict_sp[i]["name_jp_std"] if i in dict_sp else ""
-            for i in self.d.select(regex="^spc_japan$")
-        ]
+        self.sp_list = np.array(
+            [
+                dict_sp[i]["name_jp_std"] if i in dict_sp else ""
+                for i in self.d.select(regex="^spc_japan$")
+            ]
+        )
 
         if self.d.plot_id in ["OG-DB1", "UR-BC1"]:
             self.gbh_mat, self.date_mat = get_gbh(self.d, spring_census=True)
