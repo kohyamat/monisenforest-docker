@@ -410,7 +410,10 @@ class TreeSummary(object):
                 self.plot_area = 1.0
                 # raise ValueError("Plot area needed")
 
-        self.sp_list = self.d.select(regex="^spc_japan$")
+        self.sp_list = [
+            dict_sp[i]["name_jp_std"] if i in dict_sp else ""
+            for i in self.d.select(regex="^spc_japan$")
+        ]
 
         if self.d.plot_id in ["OG-DB1", "UR-BC1"]:
             self.gbh_mat, self.date_mat = get_gbh(self.d, spring_census=True)
@@ -483,10 +486,12 @@ class TreeSummary(object):
                 name_jp = sp_uniq[i]
                 yield {
                     "year": t[j],
-                    "species_jp": dict_sp[name_jp]["name_jp_std"],
-                    "species": dict_sp[name_jp]["species"],
-                    "family": dict_sp[name_jp]["family"],
-                    "order": dict_sp[name_jp]["order"],
+                    "species_jp": name_jp if name_jp in dict_sp else "その他",
+                    "species": dict_sp[name_jp]["species"]
+                    if name_jp in dict_sp
+                    else "Others",
+                    "family": dict_sp[name_jp]["family"] if name_jp in dict_sp else "",
+                    "order": dict_sp[name_jp]["order"] if name_jp in dict_sp else "",
                     "n": sp_n_area[i, j],
                     "ba": sp_ba_area[i, j],
                     "b": sp_b_area[i, j],
@@ -538,9 +543,7 @@ class TreeSummary(object):
                 yield {
                     "t1": t[i],
                     "t2": t[j],
-                    "species_jp": dict_sp[sp]["name_jp_std"]
-                    if sp in dict_sp
-                    else "その他",
+                    "species_jp": sp if sp in dict_sp else "その他",
                     "species": dict_sp[sp]["species"] if sp in dict_sp else "Others",
                     "family": dict_sp[sp]["family"] if sp in dict_sp else "",
                     "order": dict_sp[sp]["order"] if sp in dict_sp else "",
@@ -712,8 +715,8 @@ class LitterSummary(object):
             t2[t2 == "20110620"] = "20110617"
 
         # convert unit
-        meas = (meas.T / trap_area).T * 10 ** 4  # per ha
-        meas = meas / 10 ** 6  # to Mg
+        meas = (meas.T / trap_area).T * 10**4  # per ha
+        meas = meas / 10**6  # to Mg
 
         # exclude rows where all measurements are nan
         na_row = np.isnan(meas).all(axis=1)
