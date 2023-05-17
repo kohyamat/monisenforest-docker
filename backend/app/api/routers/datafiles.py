@@ -8,9 +8,9 @@ from tempfile import NamedTemporaryFile
 from typing import Any, Dict, List, Optional
 
 from fastapi import APIRouter, Body, Depends, File, HTTPException, UploadFile
-from sqlalchemy import delete, update
+from sqlalchemy import delete, update, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
+# from sqlalchemy.future import select
 from starlette.status import HTTP_201_CREATED
 
 import app.base as base
